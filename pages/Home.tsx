@@ -62,36 +62,30 @@ export default function Home() {
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={styles.postContainer}
-        stickyHeaderHiddenOnScroll
-        stickyHeaderIndices={[0]}
-      >
-        <View>
-          <View style={styles.btnsContainer}>
-            <TouchableOpacity
-              style={[
-                styles.btnView,
-                { backgroundColor: postType === "recent" ? "#ddd" : undefined },
-              ]}
-              onPress={() => setPostType("recent")}
-            >
-              <Text>Recent</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.btnView,
-                {
-                  backgroundColor:
-                    postType === "following" ? "#ddd" : undefined,
-                },
-              ]}
-              onPress={() => setPostType("following")}
-            >
-              <Text>Following</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style={styles.btnsContainer}>
+        <TouchableOpacity
+          style={[
+            styles.btnView,
+            { backgroundColor: postType === "recent" ? "#ddd" : undefined },
+          ]}
+          onPress={() => setPostType("recent")}
+        >
+          <Text>Recent</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.btnView,
+            {
+              backgroundColor: postType === "following" ? "#ddd" : undefined,
+            },
+          ]}
+          onPress={() => setPostType("following")}
+        >
+          <Text>Following</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView contentContainerStyle={styles.postContainer}>
+        <View></View>
         {posts === "loading" && <Text>Loading...</Text>}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
         {posts !== "loading" &&
@@ -119,6 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: 40,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
 });

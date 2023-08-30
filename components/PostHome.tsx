@@ -47,12 +47,12 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
             onPress={() => navigation.navigate("User", { id: post.postedbyid })}
           >
             <Text>
-              {post.postedbyusername + " at " + parseCreatedAt(post.createdat)}
+              {post.postedbyusername + ", " + parseCreatedAt(post.createdat, "date")}
             </Text>
           </Pressable>
         </View>
       </View>
-      <Text>{post.def}</Text>
+      <Text style={styles.def}>{post.def}</Text>
       <TouchableOpacity style={styles.likeBtn} onPress={likeWord}>
         {post.likes.includes(user.id) ? (
           <Ionicons name="heart" style={{ color: "red" }} />
@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 20,
     textTransform: "capitalize",
+  },
+  def: {
+    marginVertical: 10,
   },
   likeBtn: {
     flexDirection: "row",

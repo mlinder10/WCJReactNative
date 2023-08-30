@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  StyleSheet,
 } from "react-native";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
@@ -51,7 +52,7 @@ export default function Post() {
   return (
     <>
       <View style={{ flex: 1 }}>
-        <View>
+        <View style={styles.topContainer}>
           <TextInput
             value={word}
             onChange={(e) => setWord(e.nativeEvent.text)}
@@ -82,3 +83,9 @@ export default function Post() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  topContainer: {
+    marginTop: 40,
+  },
+});

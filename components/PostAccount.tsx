@@ -46,7 +46,7 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
         <Text>{parseCreatedAt(post.createdat)}</Text>
       </View>
       <View>
-        <Text>{post.def}</Text>
+        <Text style={styles.def}>{post.def}</Text>
         <View style={styles.bottomContainer}>
           <TouchableOpacity style={styles.btn} onPress={likeWord}>
             {post.likes.includes(user.id) ? (
@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 20,
     textTransform: "capitalize",
+  },
+  def: {
+    marginVertical: 10,
   },
   bottomContainer: {
     flexDirection: "row",
