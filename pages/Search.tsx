@@ -16,6 +16,7 @@ import { SERVER } from "../constants";
 import PostHome from "../components/PostHome";
 import ProfileImage from "../components/ProfileImage";
 import { useNavigation } from "@react-navigation/native";
+import UserObject from "../components/UserObject";
 
 export default function Search() {
   const [search, setSearch] = useState<string>("");
@@ -57,15 +58,15 @@ export default function Search() {
   return (
     <>
       <View style={{ flex: 1 }}>
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.topContainer}>
           <View style={styles.searchBar}>
+            <Ionicons name="search" style={{ fontSize: 16 }} />
             <TextInput
               style={styles.searchInput}
               value={search}
               onChange={(e) => setSearch(e.nativeEvent.text)}
               placeholder="Search"
             />
-            <Ionicons name="search" />
           </View>
           <View style={styles.btnsContainer}>
             <TouchableOpacity
@@ -119,63 +120,48 @@ function SearchDisplay({
       {type === "user" && users === "error" && (
         <Text>Error Fetching Users</Text>
       )}
-      {type === "user" && users !== "loading" && users !== "error" && (
-        <View style={styles.userView}>
-          {users.map((u) => (
-            <UserObject key={u.id} user={u} />
-          ))}
-        </View>
-      )}
+      {type === "user" &&
+        users !== "loading" &&
+        users !== "error" &&
+        users.map((u) => <UserObject key={u.id} user={u} />)}
       {type === "post" && posts === "loading" && <Text>Loading...</Text>}
       {type === "post" && posts === "error" && (
         <Text>Error Fetching Posts</Text>
       )}
-      {type === "post" && posts !== "loading" && posts !== "error" && (
-        <View style={styles.wordView}>
-          {posts.map((p) => (
-            <PostHome key={p.id} post={p} updatePosts={updatePosts} />
-          ))}
-        </View>
-      )}
+      {type === "post" &&
+        posts !== "loading" &&
+        posts !== "error" &&
+        posts.map((p) => (
+          <PostHome key={p.id} post={p} updatePosts={updatePosts} />
+        ))}
     </ScrollView>
   );
 }
 
-type UserObjectProps = { user: UserType };
-
-function UserObject({ user }: UserObjectProps) {
-  const navigation = useNavigation<NavigationProps>();
-
-  return (
-    <TouchableOpacity
-      style={styles.userContainer}
-      onPress={() => navigation.navigate("User", { id: user.id })}
-    >
-      <ProfileImage user={user} size={30} />
-      <Text style={{ fontSize: 15 }}>{user.uname}</Text>
-    </TouchableOpacity>
-  );
-}
-
 const styles = StyleSheet.create({
+  topContainer: {
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingTop: 40,
+    paddingBottom: 20,
+  },
   searchBar: {
     flexDirection: "row",
     backgroundColor: "#ddd",
     alignItems: "center",
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginTop: 40,
     marginBottom: 20,
+    gap: 10,
   },
   searchInput: {
-    height: 30,
-    width: "40%",
-    outlineStyle: "none",
+    height: 40,
+    width: "60%",
   },
   btnsContainer: {
     flexDirection: "row",
     gap: 20,
-    marginBottom: 40,
   },
   btn: {
     borderRadius: 5,
@@ -188,11 +174,5 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 40,
     justifyContent: "center",
-  },
-  wordView: {
-    gap: 30,
-  },
-  userContainer: {
-    alignItems: "center",
   },
 });

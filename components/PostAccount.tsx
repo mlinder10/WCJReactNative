@@ -70,7 +70,9 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
   },
   topContainer: {
     flexDirection: "row",

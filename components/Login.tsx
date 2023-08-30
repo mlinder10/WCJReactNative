@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 30,
-    outlineStyle: "none",
     borderBottomWidth: 1,
   },
   forwardBtnView: {

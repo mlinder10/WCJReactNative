@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, RootStackParamList, WordType } from "../types";
@@ -21,6 +21,7 @@ export default function Home() {
   const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
     "loading"
   );
+  const scrollViewRef = useRef<ScrollView>(null);
 
   async function getPosts() {
     if (user === null) return;
@@ -39,6 +40,12 @@ export default function Home() {
       setPosts("error");
       console.log(err?.message);
     }
+  }
+
+  function togglePostType(type: "recent" | "following") {
+    if (type !== postType) return setPostType(type);
+    getPosts();
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   }
 
   function updatePosts(newPost: WordType) {
@@ -64,27 +71,39 @@ export default function Home() {
     <>
       <View style={styles.btnsContainer}>
         <TouchableOpacity
-          style={[
-            styles.btnView,
-            { backgroundColor: postType === "recent" ? "#ddd" : undefined },
-          ]}
-          onPress={() => setPostType("recent")}
+          style={styles.btnView}
+          onPress={() => togglePostType("recent")}
         >
-          <Text>Recent</Text>
+          <View
+            style={[
+              styles.btnText,
+              {
+                borderBottomColor:
+                  postType === "recent" ? "#888" : "transparent",
+              },
+            ]}
+          >
+            <Text>Recent</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.btnView,
-            {
-              backgroundColor: postType === "following" ? "#ddd" : undefined,
-            },
-          ]}
-          onPress={() => setPostType("following")}
+          style={styles.btnView}
+          onPress={() => togglePostType("following")}
         >
-          <Text>Following</Text>
+          <View
+            style={[
+              styles.btnText,
+              {
+                borderBottomColor:
+                  postType === "following" ? "#888" : "transparent",
+              },
+            ]}
+          >
+            <Text>Following</Text>
+          </View>
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={styles.postContainer}>
+      <ScrollView ref={scrollViewRef}>
         <View></View>
         {posts === "loading" && <Text>Loading...</Text>}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
@@ -100,19 +119,21 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  postContainer: {
-    gap: 30,
-  },
   btnsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderBottomColor: "black",
+    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+    backgroundColor: "#eee",
   },
   btnView: {
     flex: 1,
     alignItems: "center",
     paddingTop: 40,
     paddingBottom: 20,
+  },
+  btnText: {
+    borderBottomWidth: 2,
+    paddingBottom: 5,
   },
 });

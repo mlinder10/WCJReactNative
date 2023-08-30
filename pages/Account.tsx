@@ -13,9 +13,14 @@ import axios from "axios";
 import { SERVER } from "../constants";
 import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
+import FollowModal from "../components/FollowModal";
 
 export default function Account() {
   const { user } = useContext(AuthContext);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<"following" | "followers">(
+    "followers"
+  );
   const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
     "loading"
   );
@@ -45,6 +50,11 @@ export default function Account() {
     }
   }
 
+  function toggleModal(type?: "following" | "followers") {
+    if (type === "followers" || type === "following") setModalType(type);
+    setModalOpen(!modalOpen);
+  }
+
   useEffect(() => {
     getPosts();
   }, [user]);
@@ -60,17 +70,23 @@ export default function Account() {
             <Text style={styles.uname}>{user.uname}</Text>
           </View>
           <View style={styles.followContainer}>
-            <TouchableOpacity style={styles.followView}>
+            <TouchableOpacity
+              onPress={() => toggleModal("followers")}
+              style={styles.followView}
+            >
               <Text>{user.followers.length}</Text>
               <Text>Followers</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.followView}>
+            <TouchableOpacity
+              onPress={() => toggleModal("following")}
+              style={styles.followView}
+            >
               <Text>{user.following.length}</Text>
               <Text>Following</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView contentContainerStyle={styles.postsContainer}>
+        <ScrollView>
           {posts === "loading" && <Text>Loading...</Text>}
           {posts === "error" && <Text>Error Fetching Posts</Text>}
           {posts !== "loading" &&
@@ -80,6 +96,12 @@ export default function Account() {
             ))}
         </ScrollView>
       </View>
+      <FollowModal
+        type={modalType}
+        isOpen={modalOpen}
+        close={toggleModal}
+        userIds={user[modalType]}
+      />
       <BottomNav />
     </>
   );
@@ -91,7 +113,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 30,
+    paddingTop: 40,
+    backgroundColor: "#eee",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 20,
   },
   imgContainer: {
     flexDirection: "row",
@@ -108,9 +134,5 @@ const styles = StyleSheet.create({
   },
   followView: {
     alignItems: "center",
-  },
-  postsContainer: {
-    paddingTop: 60,
-    gap: 30,
   },
 });

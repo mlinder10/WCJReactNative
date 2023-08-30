@@ -13,6 +13,7 @@ import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
 import { SERVER } from "../constants";
 import { useNavigation } from "@react-navigation/native";
+import ProfileImage from "./ProfileImage";
 
 type PostHomeProps = {
   post: WordType;
@@ -69,7 +70,9 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
   },
   topContainer: {
     flexDirection: "row",

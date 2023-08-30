@@ -19,31 +19,31 @@ export default function BottomNav() {
       <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Home")}>
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="home" />
-          <Text>Home</Text>
+          <Text style={styles.text}>Home</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Post")}>
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="add-circle" />
-          <Text>Post</Text>
+          <Text style={styles.text}>Post</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Search")}>
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="ios-search" />
-          <Text>Search</Text>
+          <Text style={styles.text}>Search</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Account")}>
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="person" />
-          <Text>Account</Text>
+          <Text style={styles.text}>Account</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btnContainer} onPress={logout}>
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="log-out" />
-          <Text>Log Out</Text>
+          <Text style={styles.text}>Log Out</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -53,9 +53,10 @@ export default function BottomNav() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderTopColor: "black",
+    borderTopColor: "#ccc",
     borderTopWidth: 1,
     paddingVertical: 10,
+    backgroundColor: "#eee"
   },
   btnContainer: {
     flex: 1
@@ -66,4 +67,8 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 25,
   },
+  text: {
+    color: "#222",
+    fontSize: 10
+  }
 });

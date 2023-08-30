@@ -16,9 +16,10 @@ import {
 } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
-import PostUser from "../components/PostUser";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
+import PostHome from "../components/PostHome";
+import FollowModal from "../components/FollowModal";
 
 type UserProps = {
   route: RouteProp<RootStackParamList, "User">;
@@ -77,6 +78,10 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
     "loading"
   );
+  const [modalType, setModalType] = useState<"following" | "followers">(
+    "followers"
+  );
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   async function handleFollow() {
     if (user === null) return;
@@ -113,6 +118,11 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
     setPosts(newPosts);
   }
 
+  function toggleModal(type?: "following" | "followers") {
+    if (type === "followers" || type === "following") setModalType(type);
+    setModalOpen(!modalOpen);
+  }
+
   useEffect(() => {
     setPosts("loading");
     getPosts();
@@ -137,25 +147,37 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
           </TouchableOpacity>
         </View>
         <View style={styles.followContainer}>
-          <TouchableOpacity style={styles.followView}>
+          <TouchableOpacity
+            style={styles.followView}
+            onPress={() => toggleModal("followers")}
+          >
             <Text>{userData.followers.length}</Text>
             <Text>Followers</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.followView}>
+          <TouchableOpacity
+            style={styles.followView}
+            onPress={() => toggleModal("following")}
+          >
             <Text>{userData.following.length}</Text>
             <Text>Following</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView style={styles.postsContainer}>
+      <ScrollView>
         {posts === "loading" && <Text>Loading...</Text>}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
         {posts !== "loading" &&
           posts !== "error" &&
           posts.map((p) => (
-            <PostUser key={p.id} post={p} updatePosts={updatePosts} />
+            <PostHome key={p.id} post={p} updatePosts={updatePosts} />
           ))}
       </ScrollView>
+      <FollowModal
+        type={modalType}
+        userIds={userData[modalType]}
+        isOpen={modalOpen}
+        close={toggleModal}
+      />
     </>
   );
 }
@@ -166,7 +188,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 40,
+    backgroundColor: "#eee",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    paddingBottom: 20,
   },
   imgContainer: {
     flexDirection: "row",
@@ -190,9 +216,5 @@ const styles = StyleSheet.create({
   },
   followView: {
     alignItems: "center",
-  },
-  postsContainer: {
-    paddingTop: 60,
-    gap: 30,
   },
 });
