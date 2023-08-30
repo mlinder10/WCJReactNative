@@ -43,7 +43,7 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Text style={styles.word}>{post.word}</Text>
-        <Text>Posted At {parseCreatedAt(post.createdat)}</Text>
+        <Text>{parseCreatedAt(post.createdat)}</Text>
       </View>
       <View>
         <Text>{post.def}</Text>

@@ -24,10 +24,26 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Signin" component={Signin} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Post" component={Post} />
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="Search" component={Search} />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ animation: "none" }}
+          />
+          <Stack.Screen
+            name="Post"
+            component={Post}
+            options={{ animation: "none" }}
+          />
+          <Stack.Screen
+            name="Account"
+            component={Account}
+            options={{ animation: "none" }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{ animation: "none" }}
+          />
           <Stack.Screen
             name="User"
             component={User}

@@ -20,11 +20,11 @@ import PostUser from "../components/PostUser";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 
-export default function User({
-  route,
-}: {
+type UserProps = {
   route: RouteProp<RootStackParamList, "User">;
-}) {
+};
+
+export default function User({ route }: UserProps) {
   const { id } = route.params;
   const { user } = useContext(AuthContext);
   const navigation = useNavigation<NavigationProps>();
@@ -121,7 +121,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   if (userData === null) return null;
 
   return (
-    <View>
+    <>
       <View style={styles.topContainer}>
         <View>
           <View style={styles.imgContainer}>
@@ -156,7 +156,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             <PostUser key={p.id} post={p} updatePosts={updatePosts} />
           ))}
       </ScrollView>
-    </View>
+    </>
   );
 }
 
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   followContainer: {
     flexDirection: "row",
-    gap: 60,
+    gap: 20,
   },
   followView: {
     alignItems: "center",

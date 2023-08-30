@@ -56,7 +56,7 @@ export default function Home() {
   }, [user, mounted]);
 
   useEffect(() => {
-    setPosts("loading")
+    setPosts("loading");
     getPosts();
   }, [user, postType]);
 
@@ -67,27 +67,30 @@ export default function Home() {
         stickyHeaderHiddenOnScroll
         stickyHeaderIndices={[0]}
       >
-        <View style={styles.btnsContainer}>
-          <TouchableOpacity
-            style={[
-              styles.btnView,
-              { backgroundColor: postType === "recent" ? "#ddd" : undefined },
-            ]}
-            onPress={() => setPostType("recent")}
-          >
-            <Text>Recent</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.btnView,
-              {
-                backgroundColor: postType === "following" ? "#ddd" : undefined,
-              },
-            ]}
-            onPress={() => setPostType("following")}
-          >
-            <Text>Following</Text>
-          </TouchableOpacity>
+        <View>
+          <View style={styles.btnsContainer}>
+            <TouchableOpacity
+              style={[
+                styles.btnView,
+                { backgroundColor: postType === "recent" ? "#ddd" : undefined },
+              ]}
+              onPress={() => setPostType("recent")}
+            >
+              <Text>Recent</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.btnView,
+                {
+                  backgroundColor:
+                    postType === "following" ? "#ddd" : undefined,
+                },
+              ]}
+              onPress={() => setPostType("following")}
+            >
+              <Text>Following</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {posts === "loading" && <Text>Loading...</Text>}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
@@ -115,6 +118,7 @@ const styles = StyleSheet.create({
   btnView: {
     flex: 1,
     alignItems: "center",
-    paddingVertical: 20,
+    paddingTop: 40,
+    paddingBottom: 20
   },
 });

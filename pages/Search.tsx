@@ -164,11 +164,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 10,
     borderRadius: 5,
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 40,
+    marginBottom: 20,
   },
   searchInput: {
     height: 30,
+    width: "40%",
     outlineStyle: "none",
   },
   btnsContainer: {

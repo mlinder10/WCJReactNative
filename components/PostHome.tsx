@@ -43,17 +43,13 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
       <View style={styles.topContainer}>
         <Text style={styles.word}>{post.word}</Text>
         <View>
-          <Text>
-            Posted by
-            <Pressable
-              onPress={() =>
-                navigation.navigate("User", { id: post.postedbyid })
-              }
-            >
-              <Text>{" " + post.postedbyusername + " "}</Text>
-            </Pressable>
-            at {parseCreatedAt(post.createdat)}
-          </Text>
+          <Pressable
+            onPress={() => navigation.navigate("User", { id: post.postedbyid })}
+          >
+            <Text>
+              {post.postedbyusername + " at " + parseCreatedAt(post.createdat)}
+            </Text>
+          </Pressable>
         </View>
       </View>
       <Text>{post.def}</Text>

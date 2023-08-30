@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 30,
   },
   imgContainer: {
     flexDirection: "row",
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   followContainer: {
     flexDirection: "row",
-    gap: 60,
+    gap: 20,
   },
   followView: {
     alignItems: "center",
