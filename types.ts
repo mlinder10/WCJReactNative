@@ -1,7 +1,6 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Dispatch, SetStateAction } from "react";
 
-export type WordType = {
+export type PostType = {
   id: number;
   word: string;
   def: string;
@@ -9,6 +8,7 @@ export type WordType = {
   postedbyusername: string;
   likes: number[];
   createdat: number;
+  ispublic: boolean;
 };
 
 export type UserType = {
@@ -18,7 +18,6 @@ export type UserType = {
   profileimage: string;
   following: number[];
   followers: number[];
-  likedwords: number[];
 };
 
 export type AuthContextType = {

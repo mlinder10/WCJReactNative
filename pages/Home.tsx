@@ -8,7 +8,7 @@ import {
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationProps, RootStackParamList, WordType } from "../types";
+import { NavigationProps, RootStackParamList, PostType } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
 import BottomNav from "../components/BottomNav";
@@ -18,7 +18,7 @@ export default function Home() {
   const { user, mounted } = useContext(AuthContext);
   const navigation = useNavigation<NavigationProps>();
   const [postType, setPostType] = useState<"recent" | "following">("recent");
-  const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
+  const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
   const scrollViewRef = useRef<ScrollView>(null);
@@ -28,11 +28,11 @@ export default function Home() {
 
     try {
       if (postType === "recent") {
-        let res = await axios.get(`${SERVER}/words?type=recent`);
+        let res = await axios.get(`${SERVER}/posts?type=recent`);
         setPosts(res.data.posts);
       } else {
         let res = await axios.get(
-          `${SERVER}/words?type=following&ids=${JSON.stringify(user.following)}`
+          `${SERVER}/posts?type=following&ids=${JSON.stringify(user.following)}`
         );
         setPosts(res.data.posts);
       }
@@ -48,7 +48,7 @@ export default function Home() {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   }
 
-  function updatePosts(newPost: WordType) {
+  function updatePosts(newPost: PostType) {
     if (posts === "loading" || posts === "error") return;
     let newPosts = [...posts];
     for (let p of newPosts) {

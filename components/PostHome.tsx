@@ -6,7 +6,7 @@ import {
   Pressable,
 } from "react-native";
 import React, { useContext } from "react";
-import { NavigationProps, WordType } from "../types";
+import { NavigationProps, PostType } from "../types";
 import { parseCreatedAt } from "../helpers";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthVerifier";
@@ -16,8 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import ProfileImage from "./ProfileImage";
 
 type PostHomeProps = {
-  post: WordType;
-  updatePosts: (newPost: WordType) => void;
+  post: PostType;
+  updatePosts: (newPost: PostType) => void;
 };
 
 export default function PostHome({ post, updatePosts }: PostHomeProps) {
@@ -29,7 +29,7 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
   async function likeWord() {
     if (user === null) return;
     try {
-      let res = await axios.patch(`${SERVER}/words`, {
+      let res = await axios.patch(`${SERVER}/posts`, {
         wordId: post.id,
         userId: user.id,
       });

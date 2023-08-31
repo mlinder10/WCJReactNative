@@ -6,11 +6,12 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Keyboard,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationProps, UserType, WordType } from "../types";
+import { NavigationProps, UserType, PostType } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
 import PostHome from "../components/PostHome";
@@ -24,7 +25,7 @@ export default function Search() {
   const [users, setUsers] = useState<UserType[] | "loading" | "error">(
     "loading"
   );
-  const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
+  const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
 
@@ -42,7 +43,7 @@ export default function Search() {
     }
   }
 
-  function updatePosts(newPost: WordType) {
+  function updatePosts(newPost: PostType) {
     if (posts === "loading" || posts === "error") return;
     let newPosts = [...posts];
     for (let p of newPosts) {
@@ -58,7 +59,7 @@ export default function Search() {
   return (
     <>
       <View style={{ flex: 1 }}>
-        <View style={styles.topContainer}>
+        <View onTouchStart={() => Keyboard.dismiss()} style={styles.topContainer}>
           <View style={styles.searchBar}>
             <Ionicons name="search" style={{ fontSize: 16 }} />
             <TextInput
@@ -103,9 +104,9 @@ export default function Search() {
 
 type SearchDisplayProps = {
   users: UserType[] | "loading" | "error";
-  posts: WordType[] | "loading" | "error";
+  posts: PostType[] | "loading" | "error";
   type: "user" | "post";
-  updatePosts: (newPost: WordType) => void;
+  updatePosts: (newPost: PostType) => void;
 };
 
 function SearchDisplay({
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     height: 40,
-    width: "60%",
+    width: "60%"
   },
   btnsContainer: {
     flexDirection: "row",

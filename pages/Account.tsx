@@ -8,7 +8,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { AuthContext } from "../contexts/AuthVerifier";
-import { WordType } from "../types";
+import { PostType } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
 import PostAccount from "../components/PostAccount";
@@ -21,21 +21,21 @@ export default function Account() {
   const [modalType, setModalType] = useState<"following" | "followers">(
     "followers"
   );
-  const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
+  const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
 
   async function getPosts() {
     if (user === null) return;
     try {
-      let res = await axios.get(`${SERVER}/words?type=own&userId=${user.id}`);
+      let res = await axios.get(`${SERVER}/posts?type=own&userId=${user.id}`);
       setPosts(res.data.posts);
     } catch (err: any) {
       console.log(err?.message);
     }
   }
 
-  function updatePosts(newPost?: WordType, id?: number) {
+  function updatePosts(newPost?: PostType, id?: number) {
     if (posts === "loading" || posts === "error") return;
     if (newPost !== undefined) {
       let newPosts = [...posts];

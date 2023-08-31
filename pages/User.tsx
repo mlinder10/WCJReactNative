@@ -12,7 +12,7 @@ import {
   NavigationProps,
   RootStackParamList,
   UserType,
-  WordType,
+  PostType,
 } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
@@ -75,7 +75,7 @@ type UserBodyProps = {
 
 function UserBody({ userData, updateUserData }: UserBodyProps) {
   const { user, updateUser } = useContext(AuthContext);
-  const [posts, setPosts] = useState<WordType[] | "loading" | "error">(
+  const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
   const [modalType, setModalType] = useState<"following" | "followers">(
@@ -101,7 +101,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
     if (userData === null) return;
     try {
       let res = await axios.get(
-        `${SERVER}/words?type=own&userId=${userData.id}`
+        `${SERVER}/posts?type=user&userDataId=${userData.id}`
       );
       setPosts(res.data.posts);
     } catch (err: any) {
@@ -109,7 +109,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
     }
   }
 
-  function updatePosts(newPost: WordType) {
+  function updatePosts(newPost: PostType) {
     if (posts === "loading" || posts === "error") return;
     let newPosts = [...posts];
     for (let p of newPosts) {
