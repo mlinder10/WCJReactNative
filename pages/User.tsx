@@ -135,7 +135,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       <View style={styles.topContainer}>
         <View>
           <View style={styles.imgContainer}>
-            <ProfileImage user={userData} size={30} />
+            <ProfileImage uri={userData.profileimage} size={30} />
             <Text style={styles.uname}>{userData.uname}</Text>
           </View>
           <TouchableOpacity style={styles.followBtn} onPress={handleFollow}>

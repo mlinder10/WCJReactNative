@@ -37,6 +37,7 @@ export type RootStackParamList = {
   Search: undefined;
   User: { id: number };
   Account: undefined;
+  Settings: undefined;
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

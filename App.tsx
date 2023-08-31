@@ -10,6 +10,7 @@ import Signin from "./pages/Signin";
 import AuthVerifier from "./contexts/AuthVerifier";
 import { useState } from "react";
 import { RootStackParamList } from "./types";
+import AccountSettings from "./pages/AccountSettings";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -48,6 +49,11 @@ export default function App() {
             name="User"
             component={User}
             initialParams={{ id: 0 }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={AccountSettings}
+            options={{ animation: "slide_from_left" }}
           />
         </Stack.Navigator>
       </AuthVerifier>

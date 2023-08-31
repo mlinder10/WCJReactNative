@@ -7,7 +7,7 @@ import { AuthContext } from "../contexts/AuthVerifier";
 
 export default function BottomNav() {
   const navigation = useNavigation<NavigationProps>();
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   function handleNavigate(route: RoutesType) {
     if (route === "User") return;
@@ -16,34 +16,40 @@ export default function BottomNav() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Home")}>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => handleNavigate("Home")}
+      >
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="home" />
           <Text style={styles.text}>Home</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Post")}>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => handleNavigate("Post")}
+      >
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="add-circle" />
           <Text style={styles.text}>Post</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Search")}>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => handleNavigate("Search")}
+      >
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="ios-search" />
           <Text style={styles.text}>Search</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btnContainer} onPress={() => handleNavigate("Account")}>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => handleNavigate("Account")}
+      >
         <View style={styles.btnView}>
           <Ionicons style={styles.icon} name="person" />
           <Text style={styles.text}>Account</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btnContainer} onPress={logout}>
-        <View style={styles.btnView}>
-          <Ionicons style={styles.icon} name="log-out" />
-          <Text style={styles.text}>Log Out</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -56,10 +62,10 @@ const styles = StyleSheet.create({
     borderTopColor: "#ccc",
     borderTopWidth: 1,
     paddingVertical: 10,
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
   },
   btnContainer: {
-    flex: 1
+    flex: 1,
   },
   btnView: {
     alignItems: "center",
@@ -69,6 +75,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#222",
-    fontSize: 10
-  }
+    fontSize: 10,
+  },
 });

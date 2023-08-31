@@ -8,12 +8,14 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { AuthContext } from "../contexts/AuthVerifier";
-import { PostType } from "../types";
+import { NavigationProps, PostType } from "../types";
 import axios from "axios";
 import { SERVER } from "../constants";
 import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
 import FollowModal from "../components/FollowModal";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Account() {
   const { user } = useContext(AuthContext);
@@ -24,6 +26,7 @@ export default function Account() {
   const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
+  const navigation = useNavigation<NavigationProps>();
 
   async function getPosts() {
     if (user === null) return;
@@ -65,10 +68,13 @@ export default function Account() {
     <>
       <View style={{ flex: 1 }}>
         <View style={styles.topContainer}>
-          <View style={styles.imgContainer}>
-            <ProfileImage user={user} size={50} />
+          <TouchableOpacity
+            style={styles.imgContainer}
+            onPress={() => navigation.navigate("Settings")}
+          >
+            <ProfileImage uri={user.profileimage} size={50} />
             <Text style={styles.uname}>{user.uname}</Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.followContainer}>
             <TouchableOpacity
               onPress={() => toggleModal("followers")}

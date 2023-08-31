@@ -14,7 +14,7 @@ export default function UserObject({ user }: UserObjectProps) {
       onPress={() => navigation.navigate("User", { id: user.id })}
     >
       <View style={styles.leftContainer}>
-        <ProfileImage user={user} size={30} />
+        <ProfileImage uri={user.profileimage} size={30} />
         <Text style={styles.uname}>{user.uname}</Text>
       </View>
       <View style={styles.rightContainer}>

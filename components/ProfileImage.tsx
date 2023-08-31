@@ -1,18 +1,17 @@
 import { View, Image, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { UserType } from "../types";
 import { Ionicons } from "@expo/vector-icons";
 
-type ProfileImageProps = { user: UserType; size: number };
+type ProfileImageProps = { uri: string; size: number };
 
-export default function ProfileImage({ user, size }: ProfileImageProps) {
+export default function ProfileImage({ uri, size }: ProfileImageProps) {
   const [error, setError] = useState<boolean>(false);
 
   return (
     <View>
-      {user.profileimage !== "" && !error ? (
+      {uri !== "" && !error ? (
         <Image
-          source={{ uri: user.profileimage }}
+          source={{ uri }}
           style={{ width: size, height: size, borderRadius: size }}
           onError={() => setError(true)}
         />
