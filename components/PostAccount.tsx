@@ -26,7 +26,6 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
       });
       updatePosts(res.data.post);
     } catch (err: any) {
-      console.log(err?.message);
     }
   }
 
@@ -35,7 +34,6 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
       await axios.delete(`${SERVER}/posts?type=one&postId=${post.id}`);
       updatePosts(undefined, post.id);
     } catch (err: any) {
-      console.log(err?.message);
     }
   }
 

@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Image,
   Keyboard,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -37,7 +36,6 @@ export default function Search() {
     } catch (err: any) {
       if (searchType === "user") setUsers("error");
       if (searchType === "post") setPosts("error");
-      console.log(err?.message);
     }
   }
 

@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import {
-  // Modal,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -39,7 +38,6 @@ export default function FollowModal({
       setUsers(res.data.users);
     } catch (err: any) {
       setUsers("error");
-      console.log(err?.message);
     }
   }
 

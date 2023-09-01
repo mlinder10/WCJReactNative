@@ -38,7 +38,6 @@ export default function Home() {
       }
     } catch (err: any) {
       setPosts("error");
-      console.log(err?.message);
     }
   }
 

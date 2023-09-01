@@ -27,9 +27,7 @@ export default function useAuth() {
         password,
       });
       if (res.data.user !== null) updateUser(res.data.user);
-    } catch (err: any) {
-      console.error(err?.message);
-    }
+    } catch (err: any) {}
   }
 
   async function login(username: string, password: string) {
@@ -38,9 +36,7 @@ export default function useAuth() {
         `${SERVER}/users?type=login&uname=${username}&password=${password}`
       );
       if (res.data.user !== null) updateUser(res.data.user);
-    } catch (err: any) {
-      console.error(err?.message);
-    }
+    } catch (err: any) {}
   }
 
   async function logout() {

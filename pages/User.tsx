@@ -41,7 +41,7 @@ export default function User({ route }: UserProps) {
       let res = await axios.get(`${SERVER}/users?type=profile&userId=${id}`);
       setUserData(res.data.user);
     } catch (err: any) {
-      console.log(err?.message);
+      setUserData("error")
     }
   }
 
@@ -93,7 +93,6 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       updateUser(res.data.newFollower);
       updateUserData(res.data.newFollowing);
     } catch (err: any) {
-      console.log(err?.message);
     }
   }
 
@@ -105,7 +104,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       );
       setPosts(res.data.posts);
     } catch (err: any) {
-      console.log(err?.message);
+      setPosts("error")
     }
   }
 
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   followBtn: {
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.primary,
     alignItems: "center",
     marginTop: 10,
     borderRadius: 5,

@@ -68,7 +68,6 @@ export default function AccountSettings() {
       // );
       // console.log(res)
     } catch (err: any) {
-      console.log(err);
     }
   };
 

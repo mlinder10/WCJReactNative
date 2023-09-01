@@ -15,7 +15,6 @@ import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
 import FollowModal from "../components/FollowModal";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function Account() {
   const { user } = useContext(AuthContext);
@@ -34,7 +33,7 @@ export default function Account() {
       let res = await axios.get(`${SERVER}/posts?type=own&userId=${user.id}`);
       setPosts(res.data.posts);
     } catch (err: any) {
-      console.log(err?.message);
+      setPosts("error");
     }
   }
 

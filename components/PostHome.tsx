@@ -34,7 +34,6 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
       });
       updatePosts(res.data.post);
     } catch (err: any) {
-      console.log(err?.message);
     }
   }
 

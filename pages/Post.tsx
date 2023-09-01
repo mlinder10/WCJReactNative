@@ -40,7 +40,6 @@ export default function Post() {
       setDefs(definitions);
     } catch (err: any) {
       setDefs("error");
-      console.log(err?.message);
     }
   }
 
@@ -58,7 +57,9 @@ export default function Post() {
       setDef("");
       setDefs([]);
     } catch (err: any) {
-      console.log(err?.message);
+      setWord("");
+      setDef("");
+      setDefs([]);
     }
   }
 
