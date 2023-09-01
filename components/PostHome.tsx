@@ -11,9 +11,8 @@ import { parseCreatedAt } from "../helpers";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import { useNavigation } from "@react-navigation/native";
-import ProfileImage from "./ProfileImage";
 
 type PostHomeProps = {
   post: PostType;
@@ -30,10 +29,10 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
     if (user === null) return;
     try {
       let res = await axios.patch(`${SERVER}/posts`, {
-        wordId: post.id,
+        postId: post.id,
         userId: user.id,
       });
-      updatePosts(res.data.word);
+      updatePosts(res.data.post);
     } catch (err: any) {
       console.log(err?.message);
     }
@@ -47,8 +46,10 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
           <Pressable
             onPress={() => navigation.navigate("User", { id: post.postedbyid })}
           >
-            <Text>
-              {post.postedbyusername + ", " + parseCreatedAt(post.createdat, "date")}
+            <Text style={{ color: colors.text }}>
+              {post.postedbyusername +
+                ", " +
+                parseCreatedAt(post.createdat, "date")}
             </Text>
           </Pressable>
         </View>
@@ -58,9 +59,9 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
         {post.likes.includes(user.id) ? (
           <Ionicons name="heart" style={{ color: "red" }} />
         ) : (
-          <Ionicons name="heart-outline" />
+          <Ionicons name="heart-outline" style={{ color: colors.text }} />
         )}
-        <Text>
+        <Text style={{ color: colors.text }}>
           {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
         </Text>
       </TouchableOpacity>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: colors.border,
   },
   topContainer: {
     flexDirection: "row",
@@ -82,9 +83,11 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 20,
     textTransform: "capitalize",
+    color: colors.text,
   },
   def: {
     marginVertical: 10,
+    color: colors.text,
   },
   likeBtn: {
     flexDirection: "row",

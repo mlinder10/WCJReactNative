@@ -10,7 +10,7 @@ import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, RootStackParamList, PostType } from "../types";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import PostHome from "../components/PostHome";
 
@@ -79,11 +79,11 @@ export default function Home() {
               styles.btnText,
               {
                 borderBottomColor:
-                  postType === "recent" ? "#888" : "transparent",
+                  postType === "recent" ? colors.primary : "transparent",
               },
             ]}
           >
-            <Text>Recent</Text>
+            <Text style={{color: colors.text}}>Recent</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -95,16 +95,15 @@ export default function Home() {
               styles.btnText,
               {
                 borderBottomColor:
-                  postType === "following" ? "#888" : "transparent",
+                  postType === "following" ? colors.primary : "transparent",
               },
             ]}
           >
-            <Text>Following</Text>
+            <Text style={{color: colors.text}}>Following</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView ref={scrollViewRef}>
-        <View></View>
+      <ScrollView style={{backgroundColor: colors.background}} ref={scrollViewRef}>
         {posts === "loading" && <Text>Loading...</Text>}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
         {posts !== "loading" &&
@@ -122,9 +121,9 @@ const styles = StyleSheet.create({
   btnsContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.borderSecondary,
     borderBottomWidth: 1,
-    backgroundColor: "#eee",
+    backgroundColor: colors.backgroundSecondary,
   },
   btnView: {
     flex: 1,

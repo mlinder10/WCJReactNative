@@ -13,7 +13,7 @@ import {
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 
@@ -73,14 +73,17 @@ export default function Post() {
 
   return (
     <>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <View
           onTouchStart={() => Keyboard.dismiss()}
           style={styles.topContainer}
         >
           <View style={styles.searchContainer}>
             <TouchableOpacity onPress={handleSearch}>
-              <Ionicons name="search" style={{ fontSize: 16 }} />
+              <Ionicons
+                name="search"
+                style={{ fontSize: 16, color: colors.text }}
+              />
             </TouchableOpacity>
             <TextInput
               onKeyPress={checkForEnter}
@@ -92,19 +95,32 @@ export default function Post() {
           </View>
           <View style={styles.topBtnsContainer}>
             <TouchableOpacity style={styles.topBtn} onPress={toggleDefType}>
-              <FontAwesome name={defType === "custom" ? "cog" : "search"} />
-              <Text>{defType === "custom" ? "Custom" : "Search"}</Text>
+              <FontAwesome
+                name={defType === "custom" ? "cog" : "search"}
+                style={{ color: colors.text }}
+              />
+              <Text style={{ color: colors.text }}>
+                {defType === "custom" ? "Custom" : "Search"}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.topBtn}
               onPress={() => setIsPublic(!isPublic)}
             >
-              <FontAwesome name={isPublic ? "globe" : "lock"} />
-              <Text>{isPublic ? "Public" : "Private"}</Text>
+              <FontAwesome
+                name={isPublic ? "globe" : "lock"}
+                style={{ color: colors.text }}
+              />
+              <Text style={{ color: colors.text }}>
+                {isPublic ? "Public" : "Private"}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.topBtn} onPress={handlePost}>
-              <Ionicons name="ios-arrow-up-circle" style={{ fontSize: 16 }} />
-              <Text>Post</Text>
+              <Ionicons
+                name="ios-arrow-up-circle"
+                style={{ fontSize: 16, color: colors.text }}
+              />
+              <Text style={{ color: colors.text }}>Post</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -114,7 +130,9 @@ export default function Post() {
             {defs === "error" && <Text>Error Fetching Definitions</Text>}
             {defs !== "loading" && defs !== "error" && defs.length === 0 && (
               <View style={{ padding: 20 }}>
-                <Text>Search A Word's Meaning</Text>
+                <Text style={{ color: colors.text }}>
+                  Search A Word's Meaning
+                </Text>
               </View>
             )}
             {defs !== "loading" &&
@@ -123,19 +141,22 @@ export default function Post() {
                 <TouchableOpacity
                   style={[
                     styles.def,
-                    { backgroundColor: def === d ? "#eee" : undefined },
+                    {
+                      backgroundColor:
+                        def === d ? colors.backgroundSecondary : undefined,
+                    },
                   ]}
                   key={i}
                   onPress={() => setDef(d)}
                 >
-                  <Text>{d}</Text>
+                  <Text style={{ color: colors.text }}>{d}</Text>
                 </TouchableOpacity>
               ))}
           </ScrollView>
         ) : (
           <KeyboardAvoidingView style={styles.customContainer}>
             <TextInput
-              style={{ height: "100%", lineHeight: 20 }}
+              style={{ height: "100%", lineHeight: 20, color: colors.text }}
               multiline={true}
               value={def}
               onChange={(e) => setDef(e.nativeEvent.text)}
@@ -155,11 +176,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: colors.border,
   },
   searchContainer: {
     flexDirection: "row",
-    backgroundColor: "#ddd",
+    backgroundColor: colors.border,
     alignItems: "center",
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -169,6 +190,7 @@ const styles = StyleSheet.create({
   searchInput: {
     height: 40,
     width: "60%",
+    color: colors.text,
   },
   topBtnsContainer: {
     flexDirection: "row",
@@ -176,7 +198,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   topBtn: {
-    backgroundColor: "#ddd",
+    backgroundColor: colors.border,
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 5,
@@ -186,7 +208,7 @@ const styles = StyleSheet.create({
   },
   def: {
     padding: 20,
-    borderBottomColor: "#ddd",
+    borderBottomColor: colors.border,
     borderBottomWidth: 1,
   },
   customContainer: {

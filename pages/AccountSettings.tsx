@@ -1,12 +1,20 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from "react-native";
 import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../types";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import axios from "axios";
 
 type FileType = {
@@ -15,63 +23,78 @@ type FileType = {
   name: string;
 };
 
+const imgDir = FileSystem.documentDirectory + "images/";
+
 export default function AccountSettings() {
   const navigation = useNavigation<NavigationProps>();
   const { user, logout } = useContext(AuthContext);
-  const [file, setFile] = useState<any | null>(null);
+  const [file, setFile] = useState<FileType | null>(null);
 
-  async function openImagePicker() {
+  const openImagePicker = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
     });
 
     if (!result.canceled) {
-      let newFile = {
-        uri: result.assets[0].uri,
-        type: `test/${result.assets[0].uri.split(".")[1]}`,
-        name: `test.${result.assets[0].uri.split(".")[1]}`,
-      };
-      setFile(result.assets[0].uri);
+      let uri = result.assets[0].uri;
+      let filename = uri.split("/").pop();
+      let match = /\.(\w+)$/.exec(filename ?? "");
+      let type = match ? `image/${match[1]}` : `image`;
+      setFile({ uri, type, name: filename ?? "" });
     }
-  }
+  };
 
-  async function handleImageUpload() {
+  const handleImageUpload = async () => {
     if (user === null || file === null) return;
     try {
-      let data = new FormData()
-      data.append("file", (file))
-      data.append("upload_preset", "kfffjhdp")
-      data.append("cloud_name", "dfh4arkeh")
-      let res = await axios.post(`https://api.cloudinary.com/v1_1/dfh4arkeh/image/upload`, data)
-      console.log(res)
+      let res = await FileSystem.uploadAsync(
+        `${SERVER}/images?filename=${user.id}`,
+        file.uri,
+        {
+          uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+          fieldName: "image",
+          mimeType: `image/${file.type}`,
+        }
+      );
+      console.log(res);
+      // let formData = new FormData();
+      // formData.append("image", file);
+      // let res = await axios.post(
+      //   `${SERVER}/images?filename=${user.id}`,
+      //   formData
+      // );
+      // console.log(res)
     } catch (err: any) {
-      console.log(err.response.data.error);
+      console.log(err);
     }
-  }
+  };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("Account")}>
-          <Ionicons name="arrow-back" style={{ fontSize: 30 }} />
+          <Ionicons
+            name="arrow-back"
+            style={{ fontSize: 30, color: colors.text }}
+          />
         </TouchableOpacity>
         <TouchableOpacity onPress={logout}>
-          <Ionicons name="log-out" style={{ fontSize: 30 }} />
+          <Ionicons
+            name="log-out"
+            style={{ fontSize: 30, color: colors.text }}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.bottomContainer}>
-        <ProfileImage
-          uri={file === null ? user?.profileimage ?? "" : file.uri}
-          size={50}
-        />
+        <ProfileImage uri={user?.profileimage ?? ""} size={50} />
         <TouchableOpacity onPress={openImagePicker}>
-          <Text>Pick Image</Text>
+          <Text style={{ color: colors.text }}>Pick Image</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleImageUpload}>
-          <Text>Upload</Text>
+          <Text style={{ color: colors.text }}>Upload</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -80,8 +103,8 @@ export default function AccountSettings() {
 
 const styles = StyleSheet.create({
   topContainer: {
-    backgroundColor: "#eee",
-    borderBottomColor: "#ddd",
+    backgroundColor: colors.backgroundSecondary,
+    borderBottomColor: colors.border,
     borderBottomWidth: 1,
     padding: 20,
     paddingTop: 40,

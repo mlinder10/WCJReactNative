@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { NavigationProps, RoutesType } from "../types";
 import { AuthContext } from "../contexts/AuthVerifier";
+import { colors } from "../constants";
 
 export default function BottomNav() {
   const navigation = useNavigation<NavigationProps>();
   const { user } = useContext(AuthContext);
+  const route = useRoute();
 
   function handleNavigate(route: RoutesType) {
     if (route === "User") return;
@@ -21,8 +23,21 @@ export default function BottomNav() {
         onPress={() => handleNavigate("Home")}
       >
         <View style={styles.btnView}>
-          <Ionicons style={styles.icon} name="home" />
-          <Text style={styles.text}>Home</Text>
+          <Ionicons
+            style={[
+              styles.icon,
+              { color: route.name === "Home" ? colors.primary : undefined },
+            ]}
+            name="home"
+          />
+          <Text
+            style={[
+              styles.text,
+              { color: route.name === "Home" ? colors.primary : undefined },
+            ]}
+          >
+            Home
+          </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -30,8 +45,21 @@ export default function BottomNav() {
         onPress={() => handleNavigate("Post")}
       >
         <View style={styles.btnView}>
-          <Ionicons style={styles.icon} name="add-circle" />
-          <Text style={styles.text}>Post</Text>
+          <Ionicons
+            style={[
+              styles.icon,
+              { color: route.name === "Post" ? colors.primary : undefined },
+            ]}
+            name="add-circle"
+          />
+          <Text
+            style={[
+              styles.text,
+              { color: route.name === "Post" ? colors.primary : undefined },
+            ]}
+          >
+            Post
+          </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -39,8 +67,21 @@ export default function BottomNav() {
         onPress={() => handleNavigate("Search")}
       >
         <View style={styles.btnView}>
-          <Ionicons style={styles.icon} name="ios-search" />
-          <Text style={styles.text}>Search</Text>
+          <Ionicons
+            style={[
+              styles.icon,
+              { color: route.name === "Search" ? colors.primary : undefined },
+            ]}
+            name="ios-search"
+          />
+          <Text
+            style={[
+              styles.text,
+              { color: route.name === "Search" ? colors.primary : undefined },
+            ]}
+          >
+            Search
+          </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -48,8 +89,21 @@ export default function BottomNav() {
         onPress={() => handleNavigate("Account")}
       >
         <View style={styles.btnView}>
-          <Ionicons style={styles.icon} name="person" />
-          <Text style={styles.text}>Account</Text>
+          <Ionicons
+            style={[
+              styles.icon,
+              { color: route.name === "Account" ? colors.primary : undefined },
+            ]}
+            name="person"
+          />
+          <Text
+            style={[
+              styles.text,
+              { color: route.name === "Account" ? colors.primary : undefined },
+            ]}
+          >
+            Account
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -59,10 +113,10 @@ export default function BottomNav() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderTopColor: "#ccc",
+    borderTopColor: colors.borderSecondary,
     borderTopWidth: 1,
     paddingVertical: 10,
-    backgroundColor: "#eee",
+    backgroundColor: colors.backgroundSecondary,
   },
   btnContainer: {
     flex: 1,
@@ -72,9 +126,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 25,
+    color: colors.text,
   },
   text: {
-    color: "#222",
+    color: colors.textSecondary,
     fontSize: 10,
   },
 });

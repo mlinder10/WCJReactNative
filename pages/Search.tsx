@@ -13,10 +13,8 @@ import BottomNav from "../components/BottomNav";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationProps, UserType, PostType } from "../types";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import PostHome from "../components/PostHome";
-import ProfileImage from "../components/ProfileImage";
-import { useNavigation } from "@react-navigation/native";
 import UserObject from "../components/UserObject";
 
 export default function Search() {
@@ -58,10 +56,16 @@ export default function Search() {
 
   return (
     <>
-      <View style={{ flex: 1 }}>
-        <View onTouchStart={() => Keyboard.dismiss()} style={styles.topContainer}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        <View
+          onTouchStart={() => Keyboard.dismiss()}
+          style={styles.topContainer}
+        >
           <View style={styles.searchBar}>
-            <Ionicons name="search" style={{ fontSize: 16 }} />
+            <Ionicons
+              name="search"
+              style={{ fontSize: 16, color: colors.text }}
+            />
             <TextInput
               style={styles.searchInput}
               value={search}
@@ -73,20 +77,26 @@ export default function Search() {
             <TouchableOpacity
               style={[
                 styles.btn,
-                { backgroundColor: searchType === "user" ? "#ddd" : undefined },
+                {
+                  backgroundColor:
+                    searchType === "user" ? colors.border : undefined,
+                },
               ]}
               onPress={() => setSearchType("user")}
             >
-              <Text>Users</Text>
+              <Text style={{ color: colors.text }}>Users</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.btn,
-                { backgroundColor: searchType === "post" ? "#ddd" : undefined },
+                {
+                  backgroundColor:
+                    searchType === "post" ? colors.border : undefined,
+                },
               ]}
               onPress={() => setSearchType("post")}
             >
-              <Text>Posts</Text>
+              <Text style={{ color: colors.text }}>Posts</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -117,17 +127,21 @@ function SearchDisplay({
 }: SearchDisplayProps) {
   return (
     <ScrollView>
-      {type === "user" && users === "loading" && <Text>Loading...</Text>}
+      {type === "user" && users === "loading" && (
+        <Text style={{ color: colors.text }}>Loading...</Text>
+      )}
       {type === "user" && users === "error" && (
-        <Text>Error Fetching Users</Text>
+        <Text style={{ color: colors.text }}>Error Fetching Users</Text>
       )}
       {type === "user" &&
         users !== "loading" &&
         users !== "error" &&
         users.map((u) => <UserObject key={u.id} user={u} />)}
-      {type === "post" && posts === "loading" && <Text>Loading...</Text>}
+      {type === "post" && posts === "loading" && (
+        <Text style={{ color: colors.text }}>Loading...</Text>
+      )}
       {type === "post" && posts === "error" && (
-        <Text>Error Fetching Posts</Text>
+        <Text style={{ color: colors.text }}>Error Fetching Posts</Text>
       )}
       {type === "post" &&
         posts !== "loading" &&
@@ -143,13 +157,13 @@ const styles = StyleSheet.create({
   topContainer: {
     alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.borderSecondary,
     paddingTop: 40,
     paddingBottom: 20,
   },
   searchBar: {
     flexDirection: "row",
-    backgroundColor: "#ddd",
+    backgroundColor: colors.border,
     alignItems: "center",
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -158,7 +172,8 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     height: 40,
-    width: "60%"
+    width: "60%",
+    color: colors.text,
   },
   btnsContainer: {
     flexDirection: "row",

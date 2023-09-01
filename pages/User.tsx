@@ -15,7 +15,7 @@ import {
   PostType,
 } from "../types";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 import PostHome from "../components/PostHome";
@@ -189,9 +189,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 40,
-    backgroundColor: "#eee",
+    backgroundColor: colors.backgroundSecondary,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.borderSecondary,
     paddingBottom: 20,
   },
   imgContainer: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   followBtn: {
-    backgroundColor: "#ddd",
+    backgroundColor: colors.backgroundSecondary,
     alignItems: "center",
     marginTop: 10,
     borderRadius: 5,

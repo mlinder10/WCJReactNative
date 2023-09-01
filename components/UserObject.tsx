@@ -2,6 +2,7 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import ProfileImage from "./ProfileImage";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, UserType } from "../types";
+import { colors } from "../constants";
 
 type UserObjectProps = { user: UserType };
 
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   userContainer: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.borderSecondary,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
   },
   uname: {
     fontSize: 16,
+    color: colors.text
   },
   rightContainer: {
     flexDirection: "row",
@@ -57,5 +59,6 @@ const styles = StyleSheet.create({
   },
   followText: {
     fontSize: 12,
+    color: colors.text
   },
 });

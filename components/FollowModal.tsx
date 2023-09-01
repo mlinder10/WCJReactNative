@@ -11,7 +11,7 @@ import Modal from "react-native-modal";
 import { UserType } from "../types";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import UserObject from "./UserObject";
 
 type FollowModalProps = {
@@ -75,18 +75,18 @@ export default function FollowModal({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
     margin: 0,
     marginTop: 40,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   btn: {
-    backgroundColor: "#ddd",
+    backgroundColor: colors.backgroundSecondary,
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
   container: {
     paddingTop: 40,

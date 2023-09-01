@@ -4,7 +4,6 @@ import { NavigationProps } from "../types";
 import { useNavigation } from "@react-navigation/native";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import { View } from "react-native";
 
 export default function Signin() {
   const { user, mounted } = useContext(AuthContext);
@@ -22,9 +21,9 @@ export default function Signin() {
   }
 
   return (
-    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+    <>
       {page === "login" && <Login togglePage={togglePage} />}
       {page === "signup" && <Signup togglePage={togglePage} />}
-    </View>
+    </>
   );
 }

@@ -10,7 +10,7 @@ import BottomNav from "../components/BottomNav";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { NavigationProps, PostType } from "../types";
 import axios from "axios";
-import { SERVER } from "../constants";
+import { SERVER, colors } from "../constants";
 import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
 import FollowModal from "../components/FollowModal";
@@ -66,7 +66,7 @@ export default function Account() {
 
   return (
     <>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <View style={styles.topContainer}>
           <TouchableOpacity
             style={styles.imgContainer}
@@ -80,15 +80,19 @@ export default function Account() {
               onPress={() => toggleModal("followers")}
               style={styles.followView}
             >
-              <Text>{user.followers.length}</Text>
-              <Text>Followers</Text>
+              <Text style={{ color: colors.text }}>
+                {user.followers.length}
+              </Text>
+              <Text style={{ color: colors.text }}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => toggleModal("following")}
               style={styles.followView}
             >
-              <Text>{user.following.length}</Text>
-              <Text>Following</Text>
+              <Text style={{ color: colors.text }}>
+                {user.following.length}
+              </Text>
+              <Text style={{ color: colors.text }}>Following</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -120,9 +124,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 40,
-    backgroundColor: "#eee",
+    backgroundColor: colors.backgroundSecondary,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.borderSecondary,
     paddingBottom: 20,
   },
   imgContainer: {
@@ -133,6 +137,7 @@ const styles = StyleSheet.create({
   uname: {
     fontSize: 30,
     fontWeight: "bold",
+    color: colors.text,
   },
   followContainer: {
     flexDirection: "row",
