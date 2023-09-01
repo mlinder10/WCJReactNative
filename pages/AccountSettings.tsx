@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../types";
@@ -23,14 +16,12 @@ type FileType = {
   name: string;
 };
 
-const imgDir = FileSystem.documentDirectory + "images/";
-
 export default function AccountSettings() {
   const navigation = useNavigation<NavigationProps>();
   const { user, logout } = useContext(AuthContext);
   const [file, setFile] = useState<FileType | null>(null);
 
-  const openImagePicker = async () => {
+  async function openImagePicker() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -45,9 +36,9 @@ export default function AccountSettings() {
       let type = match ? `image/${match[1]}` : `image`;
       setFile({ uri, type, name: filename ?? "" });
     }
-  };
+  }
 
-  const handleImageUpload = async () => {
+  async function handleImageUpload() {
     if (user === null || file === null) return;
     try {
       let res = await FileSystem.uploadAsync(
@@ -60,16 +51,16 @@ export default function AccountSettings() {
         }
       );
       console.log(res);
-      // let formData = new FormData();
-      // formData.append("image", file);
-      // let res = await axios.post(
-      //   `${SERVER}/images?filename=${user.id}`,
-      //   formData
-      // );
-      // console.log(res)
-    } catch (err: any) {
-    }
-  };
+    } catch (err: any) {}
+  }
+
+  async function handleDeleteProfile() {
+    if (user === null) return;
+    try {
+      await axios.delete(`${SERVER}/users?type=one&id=${user.id}`);
+      logout();
+    } catch (err: any) {}
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -88,12 +79,17 @@ export default function AccountSettings() {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomContainer}>
-        <ProfileImage uri={user?.profileimage ?? ""} size={50} />
-        <TouchableOpacity onPress={openImagePicker}>
-          <Text style={{ color: colors.text }}>Pick Image</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleImageUpload}>
-          <Text style={{ color: colors.text }}>Upload</Text>
+        <ProfileImage uri={file?.uri ?? user?.profileimage ?? ""} size={50} />
+        <View>
+          <TouchableOpacity onPress={openImagePicker}>
+            <Text style={{ color: colors.text }}>Pick Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleImageUpload}>
+            <Text style={{ color: colors.text }}>Upload</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity>
+          <Text style={{ color: colors.text }}>Delete Account</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -112,5 +108,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     padding: 20,
+    flexDirection: "row",
+    gap: 20,
   },
 });

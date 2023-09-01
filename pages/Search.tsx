@@ -10,11 +10,12 @@ import {
 import React, { useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationProps, UserType, PostType } from "../types";
+import { UserType, PostType } from "../types";
 import axios from "axios";
 import { SERVER, colors } from "../constants";
 import PostHome from "../components/PostHome";
 import UserObject from "../components/UserObject";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function Search() {
   const [search, setSearch] = useState<string>("");
@@ -125,9 +126,7 @@ function SearchDisplay({
 }: SearchDisplayProps) {
   return (
     <ScrollView>
-      {type === "user" && users === "loading" && (
-        <Text style={{ color: colors.text }}>Loading...</Text>
-      )}
+      {type === "user" && users === "loading" && <LoadingWheel topMargin />}
       {type === "user" && users === "error" && (
         <Text style={{ color: colors.text }}>Error Fetching Users</Text>
       )}
@@ -135,9 +134,7 @@ function SearchDisplay({
         users !== "loading" &&
         users !== "error" &&
         users.map((u) => <UserObject key={u.id} user={u} />)}
-      {type === "post" && posts === "loading" && (
-        <Text style={{ color: colors.text }}>Loading...</Text>
-      )}
+      {type === "post" && posts === "loading" && <LoadingWheel topMargin />}
       {type === "post" && posts === "error" && (
         <Text style={{ color: colors.text }}>Error Fetching Posts</Text>
       )}

@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../constants";
 import { AuthContext } from "../contexts/AuthVerifier";
+import AlertPopup from "./AlertPopup";
 
 type LoginProps = {
   togglePage: () => void;
@@ -20,69 +21,96 @@ export default function Login({ togglePage }: LoginProps) {
   const { login } = useContext(AuthContext);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
-  function handleLogin() {
-    login(username, password);
+  async function handleLogin() {
+    let res = await login(username, password);
+    switch (res) {
+      case "null user":
+        setAlertMessage("Not sure what went wront");
+        break;
+      case "Invalid credentials":
+        setAlertMessage("Incorrect username or password");
+        break;
+      case "Internal Service Error":
+        setAlertMessage("Server error, try again later");
+        break;
+      case "empty uname and pass":
+        setAlertMessage('Fill out "Username" and "Password" fields');
+        break;
+      case "empty uname":
+        setAlertMessage('Fill out "Username" field');
+        break;
+      case "empty pass":
+        setAlertMessage('Fill out "Password" field');
+        break;
+    }
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <View style={styles.container}>
-        <Ionicons name="book-outline" size={80} color={colors.primary} />
-        <Text style={styles.title}>Word Catching Journal</Text>
-        <View style={styles.inputContainer}>
-          <Ionicons
-            name="person-outline"
-            size={24}
-            color={colors.textSecondary}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            placeholder="Username"
-            style={styles.input}
-            placeholderTextColor={colors.textSecondary}
-            value={username}
-            onChange={(e) => setUsername(e.nativeEvent.text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Ionicons
-            name="lock-closed-outline"
-            size={24}
-            color={colors.textSecondary}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            placeholder="Password"
-            secureTextEntry
-            style={styles.input}
-            placeholderTextColor={colors.textSecondary}
-            value={password}
-            onChange={(e) => setPassword(e.nativeEvent.text)}
-          />
-        </View>
+    <>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.container}>
+          <Ionicons name="book-outline" size={80} color={colors.primary} />
+          <Text style={styles.title}>Word Catching Journal</Text>
+          <View style={styles.inputContainer}>
+            <Ionicons
+              name="person-outline"
+              size={24}
+              color={colors.textSecondary}
+              style={styles.inputIcon}
+            />
+            <TextInput
+              placeholder="Username"
+              style={styles.input}
+              placeholderTextColor={colors.textSecondary}
+              value={username}
+              onChange={(e) => setUsername(e.nativeEvent.text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Ionicons
+              name="lock-closed-outline"
+              size={24}
+              color={colors.textSecondary}
+              style={styles.inputIcon}
+            />
+            <TextInput
+              placeholder="Password"
+              secureTextEntry
+              style={styles.input}
+              placeholderTextColor={colors.textSecondary}
+              value={password}
+              onChange={(e) => setPassword(e.nativeEvent.text)}
+            />
+          </View>
 
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.loginButtonText}>Login</Text>
-        </TouchableOpacity>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.signupBtnText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={togglePage}>
-            <Text
-              style={[
-                styles.signupBtnText,
-                { textDecorationLine: "underline" },
-              ]}
-            >
-              Sign Up
-            </Text>
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.signupBtnText}>Don't have an account? </Text>
+            <TouchableOpacity onPress={togglePage}>
+              <Text
+                style={[
+                  styles.signupBtnText,
+                  { textDecorationLine: "underline" },
+                ]}
+              >
+                Sign Up
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      <AlertPopup
+        message={alertMessage}
+        clearMessage={() => setAlertMessage("")}
+      />
+    </>
   );
 }
 

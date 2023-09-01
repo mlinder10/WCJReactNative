@@ -20,23 +20,55 @@ export default function useAuth() {
     }
   }
 
-  async function signup(username: string, password: string) {
+  async function signup(
+    username: string,
+    password: string,
+    confirmPassword: string
+  ) {
+    if (username === "" && password === "" && confirmPassword === "")
+      return "empty uname and pass and confirm";
+    if (username === "" && confirmPassword === "")
+      return "empty uname and confirm";
+    if (confirmPassword === "" && password === "")
+      return "empty pass and confirm";
+    if (username === "" && password === "") return "empty uname and pass";
+    if (username === "") return "empty uname";
+    if (password === "") return "empty pass";
+    if (confirmPassword === "") return "empty confirm";
+
     try {
       let res = await axios.post(`${SERVER}/users`, {
         uname: username,
         password,
       });
-      if (res.data.user !== null) updateUser(res.data.user);
-    } catch (err: any) {}
+      if (res.data.user !== null) {
+        updateUser(res.data.user);
+        return "";
+      }
+      return "null user";
+    } catch (err: any) {
+      return err.response.data.message;
+    }
   }
 
   async function login(username: string, password: string) {
+    if (username === "" && password === "") return "empty uname and pass";
+    if (username === "") return "empty uname";
+    if (password === "") return "empty pass";
+
     try {
       let res = await axios.get(
         `${SERVER}/users?type=login&uname=${username}&password=${password}`
       );
-      if (res.data.user !== null) updateUser(res.data.user);
-    } catch (err: any) {}
+      if (res.data.user !== null) {
+        updateUser(res.data.user);
+        return "";
+      }
+      return "null user";
+    } catch (err: any) {
+      console.log(err.response.data.message)
+      return err.response.data.message;
+    }
   }
 
   async function logout() {

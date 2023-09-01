@@ -22,8 +22,12 @@ export type UserType = {
 
 export type AuthContextType = {
   user: UserType | null;
-  login: (username: string, password: string) => Promise<void>;
-  signup: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<string>;
+  signup: (
+    username: string,
+    password: string,
+    confirmPassword: string
+  ) => Promise<string>;
   logout: () => Promise<void>;
   updateUser: (newUser: any) => Promise<void>;
   mounted: boolean;

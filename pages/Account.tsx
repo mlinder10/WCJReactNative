@@ -15,6 +15,7 @@ import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
 import FollowModal from "../components/FollowModal";
 import { useNavigation } from "@react-navigation/native";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function Account() {
   const { user } = useContext(AuthContext);
@@ -96,7 +97,7 @@ export default function Account() {
           </View>
         </View>
         <ScrollView>
-          {posts === "loading" && <Text>Loading...</Text>}
+          {posts === "loading" && <LoadingWheel topMargin />}
           {posts === "error" && <Text>Error Fetching Posts</Text>}
           {posts !== "loading" &&
             posts !== "error" &&

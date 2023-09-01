@@ -8,11 +8,12 @@ import {
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationProps, RootStackParamList, PostType } from "../types";
+import { NavigationProps, PostType } from "../types";
 import axios from "axios";
 import { SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import PostHome from "../components/PostHome";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function Home() {
   const { user, mounted } = useContext(AuthContext);
@@ -82,7 +83,7 @@ export default function Home() {
               },
             ]}
           >
-            <Text style={{color: colors.text}}>Recent</Text>
+            <Text style={{ color: colors.text }}>Recent</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -98,12 +99,15 @@ export default function Home() {
               },
             ]}
           >
-            <Text style={{color: colors.text}}>Following</Text>
+            <Text style={{ color: colors.text }}>Following</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView style={{backgroundColor: colors.background}} ref={scrollViewRef}>
-        {posts === "loading" && <Text>Loading...</Text>}
+      <ScrollView
+        style={{ backgroundColor: colors.background }}
+        ref={scrollViewRef}
+      >
+        {posts === "loading" && <LoadingWheel topMargin />}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
         {posts !== "loading" &&
           posts !== "error" &&

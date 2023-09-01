@@ -16,13 +16,16 @@ import axios from "axios";
 import { SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import LoadingWheel from "../components/LoadingWheel";
+import AlertPopup from "../components/AlertPopup";
 
 export default function Post() {
   const [word, setWord] = useState<string>("");
   const [def, setDef] = useState<string>("");
-  const [defs, setDefs] = useState<string[] | "loading" | "error">([]);
+  const [defs, setDefs] = useState<string[] | "loading">([]);
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [defType, setDefType] = useState<"search" | "custom">("search");
+  const [alertMessage, setAlertMessage] = useState<string>("");
   const { user } = useContext(AuthContext);
 
   async function handleSearch() {
@@ -39,7 +42,8 @@ export default function Post() {
       });
       setDefs(definitions);
     } catch (err: any) {
-      setDefs("error");
+      setAlertMessage(`No definitions found for \"${word}\"`);
+      setDefs([]);
     }
   }
 
@@ -56,7 +60,9 @@ export default function Post() {
       setWord("");
       setDef("");
       setDefs([]);
+      setAlertMessage("Posted successfully!");
     } catch (err: any) {
+      setAlertMessage("Error posting");
       setWord("");
       setDef("");
       setDefs([]);
@@ -127,9 +133,8 @@ export default function Post() {
         </View>
         {defType === "search" ? (
           <ScrollView>
-            {defs === "loading" && <Text>Loading...</Text>}
-            {defs === "error" && <Text>Error Fetching Definitions</Text>}
-            {defs !== "loading" && defs !== "error" && defs.length === 0 && (
+            {defs === "loading" && <LoadingWheel topMargin />}
+            {defs !== "loading" && defs.length === 0 && (
               <View style={{ padding: 20 }}>
                 <Text style={{ color: colors.text }}>
                   Search A Word's Meaning
@@ -137,14 +142,13 @@ export default function Post() {
               </View>
             )}
             {defs !== "loading" &&
-              defs !== "error" &&
               defs.map((d, i) => (
                 <TouchableOpacity
                   style={[
                     styles.def,
                     {
                       backgroundColor:
-                        def === d ? colors.backgroundSecondary : undefined,
+                        def === d ? colors.border : undefined,
                     },
                   ]}
                   key={i}
@@ -166,6 +170,10 @@ export default function Post() {
           </KeyboardAvoidingView>
         )}
       </View>
+      <AlertPopup
+        message={alertMessage}
+        clearMessage={() => setAlertMessage("")}
+      />
       <BottomNav />
     </>
   );

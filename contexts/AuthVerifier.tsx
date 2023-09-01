@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext } from "react";
-import { AuthContextType, RoutesType } from "../types";
+import { AuthContextType } from "../types";
 import { DEFAULT_AUTH_CONTEXT } from "../constants";
 import useAuth from "../hooks/useAuth";
 

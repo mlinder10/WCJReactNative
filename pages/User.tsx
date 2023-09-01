@@ -20,6 +20,7 @@ import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 import PostHome from "../components/PostHome";
 import FollowModal from "../components/FollowModal";
+import LoadingWheel from "../components/LoadingWheel";
 
 type UserProps = {
   route: RouteProp<RootStackParamList, "User">;
@@ -27,7 +28,7 @@ type UserProps = {
 
 export default function User({ route }: UserProps) {
   const { id } = route.params;
-  const { user } = useContext(AuthContext);
+  const { user, mounted } = useContext(AuthContext);
   const navigation = useNavigation<NavigationProps>();
 
   if (user !== null && id === user.id) navigation.navigate("Account");
@@ -41,7 +42,7 @@ export default function User({ route }: UserProps) {
       let res = await axios.get(`${SERVER}/users?type=profile&userId=${id}`);
       setUserData(res.data.user);
     } catch (err: any) {
-      setUserData("error")
+      setUserData("error");
     }
   }
 
@@ -56,9 +57,11 @@ export default function User({ route }: UserProps) {
 
   return (
     <>
-      <View style={{ flex: 1 }}>
-        {userData === "loading" && <Text>Loading...</Text>}
-        {userData === "error" && <Text>Error Fetching Data</Text>}
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        {userData === "loading" && <LoadingWheel />}
+        {userData === "error" && (
+          <Text style={{ color: colors.text }}>Error Fetching Data</Text>
+        )}
         {userData !== "loading" && userData !== "error" && (
           <UserBody userData={userData} updateUserData={updateUserData} />
         )}
@@ -92,8 +95,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       });
       updateUser(res.data.newFollower);
       updateUserData(res.data.newFollowing);
-    } catch (err: any) {
-    }
+    } catch (err: any) {}
   }
 
   async function getPosts() {
@@ -104,7 +106,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       );
       setPosts(res.data.posts);
     } catch (err: any) {
-      setPosts("error")
+      setPosts("error");
     }
   }
 
@@ -138,7 +140,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             <Text style={styles.uname}>{userData.uname}</Text>
           </View>
           <TouchableOpacity style={styles.followBtn} onPress={handleFollow}>
-            <Text>
+            <Text style={{ color: colors.background }}>
               {userData.followers.includes(user?.id ?? 0)
                 ? "Following"
                 : "Follow"}
@@ -150,20 +152,24 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             style={styles.followView}
             onPress={() => toggleModal("followers")}
           >
-            <Text>{userData.followers.length}</Text>
-            <Text>Followers</Text>
+            <Text style={{ color: colors.text }}>
+              {userData.followers.length}
+            </Text>
+            <Text style={{ color: colors.text }}>Followers</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.followView}
             onPress={() => toggleModal("following")}
           >
-            <Text>{userData.following.length}</Text>
-            <Text>Following</Text>
+            <Text style={{ color: colors.text }}>
+              {userData.following.length}
+            </Text>
+            <Text style={{ color: colors.text }}>Following</Text>
           </TouchableOpacity>
         </View>
       </View>
       <ScrollView>
-        {posts === "loading" && <Text>Loading...</Text>}
+        {posts === "loading" && <LoadingWheel topMargin />}
         {posts === "error" && <Text>Error Fetching Posts</Text>}
         {posts !== "loading" &&
           posts !== "error" &&
@@ -201,6 +207,7 @@ const styles = StyleSheet.create({
   uname: {
     fontSize: 30,
     fontWeight: "bold",
+    color: colors.text,
   },
   followBtn: {
     backgroundColor: colors.primary,
@@ -208,6 +215,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 5,
     paddingVertical: 5,
+    width: 100
   },
   followContainer: {
     flexDirection: "row",

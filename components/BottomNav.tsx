@@ -26,14 +26,20 @@ export default function BottomNav() {
           <Ionicons
             style={[
               styles.icon,
-              { color: route.name === "Home" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Home" ? colors.primary : colors.textSecondary,
+              },
             ]}
             name="home"
           />
           <Text
             style={[
               styles.text,
-              { color: route.name === "Home" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Home" ? colors.primary : colors.textSecondary,
+              },
             ]}
           >
             Home
@@ -48,14 +54,20 @@ export default function BottomNav() {
           <Ionicons
             style={[
               styles.icon,
-              { color: route.name === "Post" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Post" ? colors.primary : colors.textSecondary,
+              },
             ]}
             name="add-circle"
           />
           <Text
             style={[
               styles.text,
-              { color: route.name === "Post" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Post" ? colors.primary : colors.textSecondary,
+              },
             ]}
           >
             Post
@@ -70,14 +82,24 @@ export default function BottomNav() {
           <Ionicons
             style={[
               styles.icon,
-              { color: route.name === "Search" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Search"
+                    ? colors.primary
+                    : colors.textSecondary,
+              },
             ]}
             name="ios-search"
           />
           <Text
             style={[
               styles.text,
-              { color: route.name === "Search" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Search"
+                    ? colors.primary
+                    : colors.textSecondary,
+              },
             ]}
           >
             Search
@@ -92,14 +114,24 @@ export default function BottomNav() {
           <Ionicons
             style={[
               styles.icon,
-              { color: route.name === "Account" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Account"
+                    ? colors.primary
+                    : colors.textSecondary,
+              },
             ]}
             name="person"
           />
           <Text
             style={[
               styles.text,
-              { color: route.name === "Account" ? colors.primary : undefined },
+              {
+                color:
+                  route.name === "Account"
+                    ? colors.primary
+                    : colors.textSecondary,
+              },
             ]}
           >
             Account
@@ -129,7 +161,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   text: {
-    color: colors.textSecondary,
+    color: colors.text,
     fontSize: 10,
   },
 });

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { SERVER, colors } from "../constants";
 import UserObject from "./UserObject";
+import LoadingWheel from "./LoadingWheel";
 
 type FollowModalProps = {
   type: "following" | "followers";
@@ -57,10 +58,13 @@ export default function FollowModal({
     >
       <View style={styles.container}>
         <TouchableOpacity style={styles.btn} onPress={close}>
-          <Ionicons name="arrow-down" style={{ fontSize: 16 }} />
+          <Ionicons
+            name="arrow-down"
+            style={{ fontSize: 16, color: colors.text }}
+          />
         </TouchableOpacity>
         <ScrollView style={{ width: "100%", height: "100%" }}>
-          {users === "loading" && <Text>Loading...</Text>}
+          {users === "loading" && <LoadingWheel topMargin />}
           {users === "error" && <Text>Error Fetching Users</Text>}
           {users !== "loading" &&
             users !== "error" &&
@@ -78,9 +82,11 @@ const styles = StyleSheet.create({
     marginTop: 40,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    borderColor: colors.border,
+    borderWidth: 1
   },
   btn: {
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.border,
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 5,
