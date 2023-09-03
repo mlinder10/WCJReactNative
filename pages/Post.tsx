@@ -18,6 +18,7 @@ import BottomNav from "../components/BottomNav";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import LoadingWheel from "../components/LoadingWheel";
 import AlertPopup from "../components/AlertPopup";
+import { DictResponseType } from "../types";
 
 export default function Post() {
   const [word, setWord] = useState<string>("");
@@ -31,11 +32,11 @@ export default function Post() {
   async function handleSearch() {
     setDefs("loading");
     try {
-      let res = await axios.get(
+      let { data }: { data: DictResponseType } = await axios.get(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
       let definitions: string[] = [];
-      res.data[0].meanings.forEach((m: any) => {
+      data[0].meanings.forEach((m: any) => {
         m.definitions.forEach((d: any) => {
           definitions.push(d.definition);
         });
@@ -147,8 +148,7 @@ export default function Post() {
                   style={[
                     styles.def,
                     {
-                      backgroundColor:
-                        def === d ? colors.border : undefined,
+                      backgroundColor: def === d ? colors.border : undefined,
                     },
                   ]}
                   key={i}
