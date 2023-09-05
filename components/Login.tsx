@@ -25,26 +25,7 @@ export default function Login({ togglePage }: LoginProps) {
 
   async function handleLogin() {
     let res = await login(username, password);
-    switch (res) {
-      case "null user":
-        setAlertMessage("Not sure what went wront");
-        break;
-      case "Invalid credentials":
-        setAlertMessage("Incorrect username or password");
-        break;
-      case "Internal Service Error":
-        setAlertMessage("Server error, try again later");
-        break;
-      case "empty uname and pass":
-        setAlertMessage('Fill out "Username" and "Password" fields');
-        break;
-      case "empty uname":
-        setAlertMessage('Fill out "Username" field');
-        break;
-      case "empty pass":
-        setAlertMessage('Fill out "Password" field');
-        break;
-    }
+    setAlertMessage(res);
   }
 
   return (

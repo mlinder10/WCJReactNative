@@ -28,7 +28,7 @@ type UserProps = {
 
 export default function User({ route }: UserProps) {
   const { id } = route.params;
-  const { user, mounted } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigation = useNavigation<NavigationProps>();
 
   if (user !== null && id === user.id) navigation.navigate("Account");

@@ -26,40 +26,7 @@ export default function LoginPage({ togglePage }: LoginProps) {
 
   async function handleSignup() {
     let res = await signup(username, password, confirmPassword);
-    switch (res) {
-      case "null user":
-        setAlertMessage("Not sure what went wrong");
-        break;
-      case "Existing Username":
-        setAlertMessage("Username already exists");
-        break;
-      case "Internal Service Error":
-        setAlertMessage("Server error, try again later");
-        break;
-      case "empty uname and pass and confirm":
-        setAlertMessage(
-          'Fill out "Username" and "Password" and "Confirm Password" fields'
-        );
-        break;
-      case "empty uname and confirm":
-        setAlertMessage('Fill out "Username" and "Confirm Password" fields');
-        break;
-      case "empty pass and confirm":
-        setAlertMessage('Fill out "Password" and "Confirm Password" fields');
-        break;
-      case "empty uname and pass":
-        setAlertMessage('Fill out "Username" and "Password" fields');
-        break;
-      case "empty uname":
-        setAlertMessage('Fill out "Username" field');
-        break;
-      case "empty pass":
-        setAlertMessage('Fill out "Password" field');
-        break;
-      case "empty confirm":
-        setAlertMessage('Fill out "Confirm Password" field');
-        break;
-    }
+    setAlertMessage(res);
   }
 
   return (
