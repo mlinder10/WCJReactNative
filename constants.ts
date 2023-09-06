@@ -1,6 +1,7 @@
 import { Appearance } from "react-native";
 
 export const SERVER = "https://wcj-backend-new.vercel.app";
+export const API_KEY = "ui45e8t34ogfai834"
 // export const SERVER = "http://localhost:3001";
 
 export const DEFAULT_AUTH_CONTEXT = {

@@ -11,7 +11,7 @@ import { parseCreatedAt } from "../helpers";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
 type PostHomeProps = {
@@ -28,13 +28,18 @@ export default function PostHome({ post, updatePosts }: PostHomeProps) {
   async function likeWord() {
     if (user === null) return;
     try {
-      let res = await axios.patch(`${SERVER}/posts`, {
-        postId: post.id,
-        userId: user.id,
-      });
+      let res = await axios.patch(
+        `${SERVER}/posts`,
+        {
+          postId: post.id,
+          userId: user.id,
+        },
+        {
+          headers: { "api-key": API_KEY },
+        }
+      );
       updatePosts(res.data.post);
-    } catch (err: any) {
-    }
+    } catch (err: any) {}
   }
 
   return (

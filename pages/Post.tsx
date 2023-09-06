@@ -13,7 +13,7 @@ import {
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import LoadingWheel from "../components/LoadingWheel";
@@ -51,13 +51,17 @@ export default function Post() {
   async function handlePost() {
     if (user === null || word === "" || def === "") return;
     try {
-      await axios.post(`${SERVER}/posts`, {
-        word,
-        def,
-        postedById: user.id,
-        postedByUsername: user.uname,
-        isPublic,
-      });
+      await axios.post(
+        `${SERVER}/posts`,
+        {
+          word,
+          def,
+          postedById: user.id,
+          postedByUsername: user.uname,
+          isPublic,
+        },
+        { headers: { "api-key": API_KEY } }
+      );
       setWord("");
       setDef("");
       setDefs([]);

@@ -7,7 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import axios from "axios";
 
 type FileType = {
@@ -48,6 +48,7 @@ export default function AccountSettings() {
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
           fieldName: "image",
           mimeType: `image/${file.type}`,
+          headers: {"api-key": API_KEY}
         }
       );
       console.log(res);
@@ -57,7 +58,9 @@ export default function AccountSettings() {
   async function handleDeleteProfile() {
     if (user === null) return;
     try {
-      await axios.delete(`${SERVER}/users?type=one&id=${user.id}`);
+      await axios.delete(`${SERVER}/users?type=one&id=${user.id}`, {
+        headers: {"api-key": API_KEY}
+      });
       logout();
     } catch (err: any) {}
   }

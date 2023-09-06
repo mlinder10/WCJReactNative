@@ -10,7 +10,7 @@ import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, PostType } from "../types";
 import axios from "axios";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import BottomNav from "../components/BottomNav";
 import PostHome from "../components/PostHome";
 import LoadingWheel from "../components/LoadingWheel";
@@ -29,7 +29,9 @@ export default function Home() {
 
     try {
       if (postType === "recent") {
-        let res = await axios.get(`${SERVER}/posts?type=recent`);
+        let res = await axios.get(`${SERVER}/posts?type=recent`, {
+          headers: {"api-key": API_KEY}
+        });
         setPosts(res.data.posts);
       } else {
         let res = await axios.get(

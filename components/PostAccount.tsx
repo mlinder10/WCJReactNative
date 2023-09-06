@@ -4,7 +4,7 @@ import { PostType } from "../types";
 import { parseCreatedAt } from "../helpers";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../contexts/AuthVerifier";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import axios from "axios";
 
 type PostAccountProps = {
@@ -20,21 +20,25 @@ export default function PostAccount({ post, updatePosts }: PostAccountProps) {
   async function likePost() {
     if (user === null) return;
     try {
-      let res = await axios.patch(`${SERVER}/posts`, {
-        postId: post.id,
-        userId: user.id,
-      });
+      let res = await axios.patch(
+        `${SERVER}/posts`,
+        {
+          postId: post.id,
+          userId: user.id,
+        },
+        { headers: { "api-key": API_KEY } }
+      );
       updatePosts(res.data.post);
-    } catch (err: any) {
-    }
+    } catch (err: any) {}
   }
 
   async function deletePost() {
     try {
-      await axios.delete(`${SERVER}/posts?type=one&postId=${post.id}`);
+      await axios.delete(`${SERVER}/posts?type=one&postId=${post.id}`, {
+        headers: { "api-key": API_KEY },
+      });
       updatePosts(undefined, post.id);
-    } catch (err: any) {
-    }
+    } catch (err: any) {}
   }
 
   return (

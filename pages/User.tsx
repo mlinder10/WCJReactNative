@@ -15,7 +15,7 @@ import {
   PostType,
 } from "../types";
 import axios from "axios";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 import PostHome from "../components/PostHome";
@@ -39,7 +39,9 @@ export default function User({ route }: UserProps) {
 
   async function getUserData() {
     try {
-      let res = await axios.get(`${SERVER}/users?type=profile&userId=${id}`);
+      let res = await axios.get(`${SERVER}/users?type=profile&userId=${id}`, {
+        headers: {"api-key": API_KEY}
+      });
       setUserData(res.data.user);
     } catch (err: any) {
       setUserData("error");

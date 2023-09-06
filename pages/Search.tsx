@@ -12,7 +12,7 @@ import BottomNav from "../components/BottomNav";
 import { Ionicons } from "@expo/vector-icons";
 import { UserType, PostType } from "../types";
 import axios from "axios";
-import { SERVER, colors } from "../constants";
+import { API_KEY, SERVER, colors } from "../constants";
 import PostHome from "../components/PostHome";
 import UserObject from "../components/UserObject";
 import LoadingWheel from "../components/LoadingWheel";
@@ -31,7 +31,9 @@ export default function Search() {
     if (searchType === "user") setUsers("loading");
     if (searchType === "post") setPosts("loading");
     try {
-      let res = await axios.get(`${SERVER}/users?type=search&input=${search}`);
+      let res = await axios.get(`${SERVER}/users?type=search&input=${search}`, {
+        headers: {"api-key": API_KEY}
+      });
       setUsers(res.data.users);
       setPosts(res.data.words);
     } catch (err: any) {
