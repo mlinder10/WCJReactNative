@@ -14,8 +14,7 @@ import {
   UserType,
   PostType,
 } from "../types";
-import axios from "axios";
-import { API_KEY, SERVER, colors } from "../constants";
+import { colors, instance } from "../constants";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 import PostHome from "../components/PostHome";
@@ -39,9 +38,7 @@ export default function User({ route }: UserProps) {
 
   async function getUserData() {
     try {
-      let res = await axios.get(`${SERVER}/users?type=profile&userId=${id}`, {
-        headers: {"api-key": API_KEY}
-      });
+      let res = await instance.get(`/users/profile&id=${id}`);
       setUserData(res.data.user);
     } catch (err: any) {
       setUserData("error");
@@ -55,6 +52,8 @@ export default function User({ route }: UserProps) {
 
   useEffect(() => {
     getUserData();
+
+    return () => {};
   }, [id]);
 
   return (
@@ -91,7 +90,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   async function handleFollow() {
     if (user === null) return;
     try {
-      let res = await axios.patch(`${SERVER}/users`, {
+      let res = await instance.patch(`/users`, {
         followerId: user.id,
         followingId: userData.id,
       });
@@ -103,8 +102,8 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   async function getPosts() {
     if (userData === null) return;
     try {
-      let res = await axios.get(
-        `${SERVER}/posts?type=user&userDataId=${userData.id}`
+      let res = await instance.get(
+        `/posts?type=user&userDataId=${userData.id}`
       );
       setPosts(res.data.posts);
     } catch (err: any) {
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 5,
     paddingVertical: 5,
-    width: 100
+    width: 100,
   },
   followContainer: {
     flexDirection: "row",

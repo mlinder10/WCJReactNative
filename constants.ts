@@ -1,13 +1,22 @@
 import { Appearance } from "react-native";
+import axios from "axios";
 
 export const SERVER = "https://wcj-backend-new.vercel.app";
-export const API_KEY = "ui45e8t34ogfai834"
 // export const SERVER = "http://localhost:3001";
+export const API_KEY = "ui45e8t34ogfai834";
+export const instance = axios.create({
+  headers: { "api-key": API_KEY },
+  baseURL: SERVER,
+});
 
 export const DEFAULT_AUTH_CONTEXT = {
   user: null,
-  login: async () => {return ""},
-  signup: async () => {return ""},
+  login: async () => {
+    return "";
+  },
+  signup: async () => {
+    return "";
+  },
   logout: async () => {},
   updateUser: async () => {},
   mounted: false,

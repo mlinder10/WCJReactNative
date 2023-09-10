@@ -9,8 +9,7 @@ import {
 import Modal from "react-native-modal";
 import { UserType } from "../types";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_KEY, SERVER, colors } from "../constants";
+import { colors, instance } from "../constants";
 import UserObject from "./UserObject";
 import LoadingWheel from "./LoadingWheel";
 
@@ -33,9 +32,8 @@ export default function FollowModal({
 
   async function getUsers() {
     try {
-      let res = await axios.get(
-        `${SERVER}/users?type=${type}&ids=${JSON.stringify(userIds)}`,
-        { headers: { "api-key": API_KEY } }
+      let res = await instance.get(
+        `/users/follow&ids=${JSON.stringify(userIds)}`
       );
       setUsers(res.data.users);
     } catch (err: any) {

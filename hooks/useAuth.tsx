@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserType } from "../types";
-import { API_KEY, SERVER } from "../constants";
+import { instance } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function useAuth() {
@@ -37,16 +36,10 @@ export default function useAuth() {
     if (confirmPassword === "") return "empty confirm";
 
     try {
-      let res = await axios.post(
-        `${SERVER}/users`,
-        {
-          uname: username,
-          password,
-        },
-        {
-          headers: { "api-key": API_KEY },
-        }
-      );
+      let res = await instance.post(`/auth`, {
+        uname: username,
+        password,
+      });
       if (res.data.user !== null) {
         updateUser(res.data.user);
         return "";
@@ -63,11 +56,8 @@ export default function useAuth() {
     if (password === "") return "empty pass";
 
     try {
-      let res = await axios.get(
-        `${SERVER}/users?type=login&uname=${username}&password=${password}`,
-        {
-          headers: { "api-key": API_KEY },
-        }
+      let res = await instance.get(
+        `/auth?uname=${username}&password=${password}`
       );
       if (res.data.user !== null) {
         updateUser(res.data.user);
@@ -75,7 +65,6 @@ export default function useAuth() {
       }
       return "null user";
     } catch (err: any) {
-      console.log(err.response.data.message);
       return err.response.data.message;
     }
   }

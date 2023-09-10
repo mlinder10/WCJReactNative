@@ -9,8 +9,7 @@ import React, { useContext, useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { NavigationProps, PostType } from "../types";
-import axios from "axios";
-import { API_KEY, SERVER, colors } from "../constants";
+import { colors, instance } from "../constants";
 import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
 import FollowModal from "../components/FollowModal";
@@ -31,9 +30,7 @@ export default function Account() {
   async function getPosts() {
     if (user === null) return;
     try {
-      let res = await axios.get(`${SERVER}/posts?type=own&userId=${user.id}`, {
-        headers: { "api-key": API_KEY },
-      });
+      let res = await instance.get(`/posts/own&id=${user.id}`);
       setPosts(res.data.posts);
     } catch (err: any) {
       setPosts("error");
@@ -62,6 +59,8 @@ export default function Account() {
 
   useEffect(() => {
     getPosts();
+
+    return () => {};
   }, [user]);
 
   if (user === null) return null;

@@ -9,8 +9,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, PostType } from "../types";
-import axios from "axios";
-import { API_KEY, SERVER, colors } from "../constants";
+import { colors, instance } from "../constants";
 import BottomNav from "../components/BottomNav";
 import PostHome from "../components/PostHome";
 import LoadingWheel from "../components/LoadingWheel";
@@ -29,13 +28,11 @@ export default function Home() {
 
     try {
       if (postType === "recent") {
-        let res = await axios.get(`${SERVER}/posts?type=recent`, {
-          headers: {"api-key": API_KEY}
-        });
+        let res = await instance.get(`/posts/recent`);
         setPosts(res.data.posts);
       } else {
-        let res = await axios.get(
-          `${SERVER}/posts?type=following&ids=${JSON.stringify(user.following)}`
+        let res = await instance.get(
+          `/posts/following&ids=${JSON.stringify(user.following)}`
         );
         setPosts(res.data.posts);
       }
@@ -67,6 +64,8 @@ export default function Home() {
   useEffect(() => {
     setPosts("loading");
     getPosts();
+
+    return () => {};
   }, [user, postType]);
 
   return (
