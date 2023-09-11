@@ -33,7 +33,7 @@ export default function FollowModal({
   async function getUsers() {
     try {
       let res = await instance.get(
-        `/users/follow&ids=${JSON.stringify(userIds)}`
+        `/users/follow?ids=${JSON.stringify(userIds)}`
       );
       setUsers(res.data.users);
     } catch (err: any) {

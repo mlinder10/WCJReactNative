@@ -103,7 +103,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
     if (userData === null) return;
     try {
       let res = await instance.get(
-        `/posts?type=user&userDataId=${userData.id}`
+        `/posts/user?id=${userData.id}`
       );
       setPosts(res.data.posts);
     } catch (err: any) {
