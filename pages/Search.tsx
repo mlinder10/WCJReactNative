@@ -32,7 +32,7 @@ export default function Search() {
     try {
       let res = await instance.get(`/users/search?input=${search}`);
       setUsers(res.data.users);
-      setPosts(res.data.words);
+      setPosts(res.data.posts);
     } catch (err: any) {
       if (searchType === "user") setUsers("error");
       if (searchType === "post") setPosts("error");

@@ -32,7 +32,7 @@ export default function Home() {
         setPosts(res.data.posts);
       } else {
         let res = await instance.get(
-          `/posts/following&ids=${JSON.stringify(user.following)}`
+          `/posts/following?ids=${JSON.stringify(user.following)}`
         );
         setPosts(res.data.posts);
       }

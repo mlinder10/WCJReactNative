@@ -38,7 +38,7 @@ export default function User({ route }: UserProps) {
 
   async function getUserData() {
     try {
-      let res = await instance.get(`/users/profile&id=${id}`);
+      let res = await instance.get(`/users/profile?id=${id}`);
       setUserData(res.data.user);
     } catch (err: any) {
       setUserData("error");
