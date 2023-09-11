@@ -11,6 +11,7 @@ import AuthVerifier from "./contexts/AuthVerifier";
 import { useState } from "react";
 import { RootStackParamList } from "./types";
 import AccountSettings from "./pages/AccountSettings";
+import FollowModal from "./pages/FollowModal";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,32 +29,39 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ animation: "none" }}
+            options={{ animation: "none", gestureEnabled: false }}
           />
           <Stack.Screen
             name="Post"
             component={Post}
-            options={{ animation: "none" }}
+            options={{ animation: "none", gestureEnabled: false }}
           />
           <Stack.Screen
             name="Account"
             component={Account}
-            options={{ animation: "none" }}
+            options={{ animation: "none", gestureEnabled: false }}
           />
           <Stack.Screen
             name="Search"
             component={Search}
-            options={{ animation: "none" }}
+            options={{ animation: "none", gestureEnabled: false }}
           />
           <Stack.Screen
             name="User"
             component={User}
             initialParams={{ id: 0 }}
+            options={{ animation: "none" }}
           />
           <Stack.Screen
             name="Settings"
             component={AccountSettings}
-            options={{ animation: "slide_from_left" }}
+            options={{ animation: "fade_from_bottom" }}
+          />
+          <Stack.Screen
+            name="Follow"
+            component={FollowModal}
+            initialParams={{ type: "following", ids: [] }}
+            options={{ presentation: "modal", gestureDirection: "vertical" }}
           />
         </Stack.Navigator>
       </AuthVerifier>

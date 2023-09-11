@@ -64,8 +64,6 @@ export default function Home() {
   useEffect(() => {
     setPosts("loading");
     getPosts();
-
-    return () => {};
   }, [user, postType]);
 
   return (

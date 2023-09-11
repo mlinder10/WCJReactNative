@@ -13,7 +13,7 @@ export default function BottomNav() {
 
   function handleNavigate(route: RoutesType) {
     if (route === "User") return;
-    if (user !== null) navigation.navigate(route);
+    if (user !== null) navigation.replace(route);
   }
 
   return (

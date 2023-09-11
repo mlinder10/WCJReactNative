@@ -18,7 +18,6 @@ import { colors, instance } from "../constants";
 import { AuthContext } from "../contexts/AuthVerifier";
 import ProfileImage from "../components/ProfileImage";
 import PostHome from "../components/PostHome";
-import FollowModal from "../components/FollowModal";
 import LoadingWheel from "../components/LoadingWheel";
 
 type UserProps = {
@@ -52,8 +51,6 @@ export default function User({ route }: UserProps) {
 
   useEffect(() => {
     getUserData();
-
-    return () => {};
   }, [id]);
 
   return (
@@ -82,10 +79,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
-  const [modalType, setModalType] = useState<"following" | "followers">(
-    "followers"
-  );
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const navigation = useNavigation<NavigationProps>();
 
   async function handleFollow() {
     if (user === null) return;
@@ -102,9 +96,7 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
   async function getPosts() {
     if (userData === null) return;
     try {
-      let res = await instance.get(
-        `/posts/user?id=${userData.id}`
-      );
+      let res = await instance.get(`/posts/user?id=${userData.id}`);
       setPosts(res.data.posts);
     } catch (err: any) {
       setPosts("error");
@@ -118,11 +110,6 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
       if (p.id === newPost.id) p.likes = newPost.likes;
     }
     setPosts(newPosts);
-  }
-
-  function toggleModal(type?: "following" | "followers") {
-    if (type === "followers" || type === "following") setModalType(type);
-    setModalOpen(!modalOpen);
   }
 
   useEffect(() => {
@@ -151,7 +138,12 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
         <View style={styles.followContainer}>
           <TouchableOpacity
             style={styles.followView}
-            onPress={() => toggleModal("followers")}
+            onPress={() =>
+              navigation.navigate("Follow", {
+                type: "followers",
+                ids: userData.followers,
+              })
+            }
           >
             <Text style={{ color: colors.text }}>
               {userData.followers.length}
@@ -160,7 +152,12 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.followView}
-            onPress={() => toggleModal("following")}
+            onPress={() =>
+              navigation.navigate("Follow", {
+                type: "following",
+                ids: userData.following,
+              })
+            }
           >
             <Text style={{ color: colors.text }}>
               {userData.following.length}
@@ -178,12 +175,6 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             <PostHome key={p.id} post={p} updatePosts={updatePosts} />
           ))}
       </ScrollView>
-      <FollowModal
-        type={modalType}
-        userIds={userData[modalType]}
-        isOpen={modalOpen}
-        close={toggleModal}
-      />
     </>
   );
 }

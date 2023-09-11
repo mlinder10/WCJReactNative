@@ -42,6 +42,7 @@ export type RootStackParamList = {
   User: { id: number };
   Account: undefined;
   Settings: undefined;
+  Follow: { type: "following" | "followers"; ids: number[] };
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

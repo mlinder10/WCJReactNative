@@ -12,16 +12,11 @@ import { NavigationProps, PostType } from "../types";
 import { colors, instance } from "../constants";
 import PostAccount from "../components/PostAccount";
 import ProfileImage from "../components/ProfileImage";
-import FollowModal from "../components/FollowModal";
 import { useNavigation } from "@react-navigation/native";
 import LoadingWheel from "../components/LoadingWheel";
 
 export default function Account() {
   const { user } = useContext(AuthContext);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<"following" | "followers">(
-    "followers"
-  );
   const [posts, setPosts] = useState<PostType[] | "loading" | "error">(
     "loading"
   );
@@ -52,15 +47,8 @@ export default function Account() {
     }
   }
 
-  function toggleModal(type?: "following" | "followers") {
-    if (type === "followers" || type === "following") setModalType(type);
-    setModalOpen(!modalOpen);
-  }
-
   useEffect(() => {
     getPosts();
-
-    return () => {};
   }, [user]);
 
   if (user === null) return null;
@@ -78,7 +66,12 @@ export default function Account() {
           </TouchableOpacity>
           <View style={styles.followContainer}>
             <TouchableOpacity
-              onPress={() => toggleModal("followers")}
+              onPress={() =>
+                navigation.navigate("Follow", {
+                  type: "followers",
+                  ids: user.followers,
+                })
+              }
               style={styles.followView}
             >
               <Text style={{ color: colors.text }}>
@@ -87,7 +80,12 @@ export default function Account() {
               <Text style={{ color: colors.text }}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => toggleModal("following")}
+              onPress={() =>
+                navigation.navigate("Follow", {
+                  type: "following",
+                  ids: user.following,
+                })
+              }
               style={styles.followView}
             >
               <Text style={{ color: colors.text }}>
@@ -107,12 +105,6 @@ export default function Account() {
             ))}
         </ScrollView>
       </View>
-      <FollowModal
-        type={modalType}
-        isOpen={modalOpen}
-        close={toggleModal}
-        userIds={user[modalType]}
-      />
       <BottomNav />
     </>
   );
