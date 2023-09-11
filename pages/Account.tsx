@@ -30,7 +30,7 @@ export default function Account() {
   async function getPosts() {
     if (user === null) return;
     try {
-      let res = await instance.get(`/posts/own&id=${user.id}`);
+      let res = await instance.get(`/posts/own?id=${user.id}`);
       setPosts(res.data.posts);
     } catch (err: any) {
       setPosts("error");

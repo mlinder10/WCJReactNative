@@ -30,7 +30,7 @@ export default function Search() {
     if (searchType === "user") setUsers("loading");
     if (searchType === "post") setPosts("loading");
     try {
-      let res = await instance.get(`/users/search&input=${search}`);
+      let res = await instance.get(`/users/search?input=${search}`);
       setUsers(res.data.users);
       setPosts(res.data.words);
     } catch (err: any) {
