@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthVerifier";
 import axios from "axios";
 import { colors, instance } from "../constants";

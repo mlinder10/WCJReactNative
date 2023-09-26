@@ -29,27 +29,21 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{ animation: "none", gestureEnabled: false }}
+            options={{ animation: "none" }}
           />
           <Stack.Screen
             name="Post"
             component={Post}
-            options={{ animation: "none", gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="Account"
-            component={Account}
-            options={{ animation: "none", gestureEnabled: false }}
+            options={{ animation: "none" }}
           />
           <Stack.Screen
             name="Search"
             component={Search}
-            options={{ animation: "none", gestureEnabled: false }}
+            options={{ animation: "none" }}
           />
           <Stack.Screen
-            name="User"
-            component={User}
-            initialParams={{ id: 0 }}
+            name="Account"
+            component={Account}
             options={{ animation: "none" }}
           />
           <Stack.Screen
@@ -58,9 +52,15 @@ export default function App() {
             options={{ animation: "fade_from_bottom" }}
           />
           <Stack.Screen
+            name="User"
+            component={User}
+            initialParams={{ id: 0 }}
+            options={{ animation: "none" }}
+          />
+          <Stack.Screen
             name="Follow"
             component={FollowModal}
-            initialParams={{ type: "following", ids: [] }}
+            initialParams={{ ids: [] }}
             options={{ presentation: "modal", gestureDirection: "vertical" }}
           />
         </Stack.Navigator>

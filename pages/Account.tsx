@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { AuthContext } from "../contexts/AuthVerifier";
 import { NavigationProps, PostType } from "../types";
@@ -68,7 +68,6 @@ export default function Account() {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Follow", {
-                  type: "followers",
                   ids: user.followers,
                 })
               }
@@ -82,7 +81,6 @@ export default function Account() {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Follow", {
-                  type: "following",
                   ids: user.following,
                 })
               }

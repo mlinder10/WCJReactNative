@@ -1,5 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from "react-native";
+import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../types";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,6 +25,7 @@ export default function AccountSettings() {
   const navigation = useNavigation<NavigationProps>();
   const { user, logout } = useContext(AuthContext);
   const [file, setFile] = useState<FileType | null>(null);
+  const [newUsername, setNewUsername] = useState<string>("");
 
   async function openImagePicker() {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -54,10 +61,17 @@ export default function AccountSettings() {
     } catch (err: any) {}
   }
 
+  async function handleEditUsername() {
+    if (user === null) return;
+    try {
+      await instance.patch(`/users/username`, { id: user.id, newUsername });
+    } catch (err: any) {}
+  }
+
   async function handleDeleteProfile() {
     if (user === null) return;
     try {
-      await instance.delete(`/users?type=one&id=${user.id}`);
+      await instance.delete(`/users?id=${user.id}`);
       logout();
     } catch (err: any) {}
   }
@@ -89,8 +103,20 @@ export default function AccountSettings() {
           </TouchableOpacity>
         </View>
         <TouchableOpacity>
-          <Text style={{ color: colors.text }}>Delete Account</Text>
+          <Text style={{ color: colors.text }} onPress={handleDeleteProfile}>
+            Delete Account
+          </Text>
         </TouchableOpacity>
+        <View>
+          <TextInput
+            placeholder="Edit Username"
+            value={newUsername}
+            onChangeText={(text) => setNewUsername(text)}
+          />
+          <TouchableOpacity onPress={handleEditUsername}>
+            <Text>Change</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

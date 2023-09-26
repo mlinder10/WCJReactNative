@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { RouteProp, useNavigation } from "@react-navigation/native";
 import {
@@ -140,7 +140,6 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             style={styles.followView}
             onPress={() =>
               navigation.navigate("Follow", {
-                type: "followers",
                 ids: userData.followers,
               })
             }
@@ -154,7 +153,6 @@ function UserBody({ userData, updateUserData }: UserBodyProps) {
             style={styles.followView}
             onPress={() =>
               navigation.navigate("Follow", {
-                type: "following",
                 ids: userData.following,
               })
             }

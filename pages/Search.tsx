@@ -7,7 +7,7 @@ import {
   ScrollView,
   Keyboard,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import { Ionicons } from "@expo/vector-icons";
 import { UserType, PostType } from "../types";

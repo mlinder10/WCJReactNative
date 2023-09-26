@@ -34,26 +34,19 @@ export type AuthContextType = {
 };
 
 export type RootStackParamList = {
-  Home: undefined;
-  Profile: undefined;
   Signin: undefined;
+  Home: undefined;
   Post: undefined;
   Search: undefined;
-  User: { id: number };
   Account: undefined;
+  User: { id: number };
   Settings: undefined;
-  Follow: { type: "following" | "followers"; ids: number[] };
+  Follow: { ids: number[] };
 };
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
-export type RoutesType =
-  | "Home"
-  | "Post"
-  | "Search"
-  | "Account"
-  | "User"
-  | "Signin";
+export type RoutesType = keyof RootStackParamList
 
 export type DictResponseType = {
   word: string;

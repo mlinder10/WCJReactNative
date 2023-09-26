@@ -30,7 +30,7 @@ export default function FollowModal({ route }: FollowModalProps) {
   useEffect(() => {
     setUsers("loading");
     getUsers();
-  }, [route.params.ids, route.params.type]);
+  }, [route.params.ids]);
 
   return (
     <View style={styles.container}>

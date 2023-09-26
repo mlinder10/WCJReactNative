@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NavigationProps, RoutesType } from "../types";
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
   },
   btnView: {
     alignItems: "center",
+    position: "relative",
   },
   icon: {
     fontSize: 25,
@@ -163,5 +164,19 @@ const styles = StyleSheet.create({
   text: {
     color: colors.text,
     fontSize: 10,
+  },
+  notifView: {
+    backgroundColor: "#f00",
+    position: "absolute",
+    right: "20%",
+    top: "-10%",
+    borderRadius: 100,
+    height: 20,
+    aspectRatio: "1/1",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  notifText: {
+    color: colors.text,
   },
 });
