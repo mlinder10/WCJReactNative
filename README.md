@@ -11,10 +11,10 @@ Word Catching Journal is a mobile app built with TypeScript, React Native, and E
 
 ## Screenshots
 
-![Login](https://drive.google.com/file/d/16w1GpzxhQVCgVaBhdy__gGgImtCRKaFG/view?usp=drive_link)
-![Following](https://drive.google.com/file/d/1HdO4TtBMW09WcIP3Dfwp8JfVh39D1bgx/view?usp=drive_link)
-![Post](https://drive.google.com/file/d/1u6uj_FYgrJV7eFFj9rO0araDz9-PlePX/view?usp=drive_link)
-![Account](https://drive.google.com/file/d/1UKyr-s_oVPAW8wDaoNWZH1Bt25TK0ewJ/view?usp=drive_link)
+![Login](https://drive.google.com/uc?id=16w1GpzxhQVCgVaBhdy__gGgImtCRKaFG)
+![Following](https://drive.google.com/uc?id=1HdO4TtBMW09WcIP3Dfwp8JfVh39D1bgx)
+![Post](https://drive.google.com/uc?id=1u6uj_FYgrJV7eFFj9rO0araDz9-PlePX)
+![Account](https://drive.google.com/uc?id=1UKyr-s_oVPAW8wDaoNWZH1Bt25TK0ewJ)
 
 ## Installation
 
