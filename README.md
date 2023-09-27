@@ -20,7 +20,7 @@ Word Catching Journal is a mobile app built with TypeScript, React Native, and E
 
 To run this app on your local machine, follow these steps:
 
-1. Clone this repository:
-
    ```bash
-   git clone https://github.com/mlinder10/word-mobile.git
+   git clone https://github.com/mlinder10/wcj-mobile.git
+   cd wcj-mobile
+   npx expo start
